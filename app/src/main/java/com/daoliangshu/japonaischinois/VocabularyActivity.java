@@ -1,8 +1,5 @@
 package com.daoliangshu.japonaischinois;
 
-import android.app.Activity;
-import android.content.Context;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,15 +18,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 
 
@@ -216,9 +208,7 @@ public class VocabularyActivity extends AppCompatActivity {
     }
 
     public void pronounceLetter(String phonOrLetter) {
-        if (dbHelper != null) {
-
-        }
+       ttsManager.speak(phonOrLetter);
     }
 
     public void saveSettings() {
@@ -239,11 +229,11 @@ public class VocabularyActivity extends AppCompatActivity {
             if (mPagerMain.getCurrentItem() == 0) {
                 // If the user is currently looking at the first step, allow the system to handle the
                 // Back button. This calls finish() on this activity and pops the back stack.
+                backCumul += 1;
+                if(backCumul >= 2) {this.finish(); return;}
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.confirm_quit),
-                                Toast.LENGTH_SHORT).show();
-                backCumul += 1;
-                if(backCumul >= 2) this.finish();
+                        Toast.LENGTH_SHORT).show();
                 return;
             } else {
                 // Otherwise, select the previous step.

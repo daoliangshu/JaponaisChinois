@@ -14,8 +14,20 @@ public class Settings {
     public static final int ENTRY_50_50 = 2;
 
 
+    public static int getCurIntervalPos(){
+        switch(curInterval){
+            case 9000000: return 0;
+            case 3000: return 1;
+            case 4000: return 2;
+            case 10000: return 3;
+            case 15000: return 4;
+            case 30000: return 5;
+            default: return 0;
+        }
+    }
     public static int curLesson = 1;
     public static int curInterval = 100000;
+    public static float curEmptyRatio = 0.5f;
     public static boolean isNightMode = false;
     public static boolean isAutoSpeak = false;
     public static boolean hideWord = false;

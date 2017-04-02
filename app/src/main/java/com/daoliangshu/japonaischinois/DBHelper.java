@@ -14,6 +14,8 @@ import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Random;
 
 /**
  * Created by daoliangshu on 1/28/17.
@@ -22,6 +24,12 @@ import java.util.HashMap;
  */
 
 public class DBHelper extends SQLiteOpenHelper {
+
+    /**---- uselesspart --**/
+    public final static int SUBST = 0;
+    public final static int VERB = 1;
+    public final static int OTHER = 2;
+    public final static int WORD = 3;
 
     public final static String COL_ID = "_id";
     public final static String COL_WORD = "zh_1";
@@ -34,12 +42,14 @@ public class DBHelper extends SQLiteOpenHelper {
     private static String DB_PATH;
     private static final String DB_NAME = "japonais_chinois.db";
     private final Context myContext;
+    Random rand;
 
     public DBHelper(Context context) throws SQLException {
         super(context, DB_NAME, null, 3);
         myContext = context;
         DB_PATH = myContext.getFilesDir().getPath();
         openDB();
+        rand = new Random();
     }
 
     private void openDB() throws SQLException {
@@ -159,5 +169,112 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         c.close();
         return resList;
+    }
+
+
+    // Compability methods
+    public String getTransById(int tid){
+        String query = "SELECT " +
+                COL_TRANS + " " +
+                "FROM " + TB_BASIC +
+                " WHERE " + COL_ID + "=" + String.format("%d", tid) + ";";
+        Cursor c = myDB.rawQuery(query, null);
+        while(c.moveToNext()){
+            return c.getString(0);
+        }
+        return null;
+    }
+
+    public String getWordById(int tid){
+        String query = "SELECT " +
+                COL_WORD + " " +
+                "FROM " + TB_BASIC +
+                " WHERE " + COL_ID + "=" + String.format("%d", tid) + ";";
+        Cursor c = myDB.rawQuery(query, null);
+        while(c.moveToNext()){
+            return c.getString(0);
+        }
+        return null;
+    }
+
+    public ArrayList<Integer> getWordIds(){
+        String query = "SELECT " +
+                COL_ID + " " +
+                "FROM " + TB_BASIC + " " +
+                "COUNT 100" + ";";
+        Cursor c = myDB.rawQuery(query, null);
+        ArrayList<Integer> results = new ArrayList<>();
+        while(c.moveToNext()){
+            results.add(c.getInt(0));
+        }
+        return results;
+    }
+
+    public String getWordTrans(String zhWord){
+        String query = "SELECT " +
+                COL_TRANS + " " +
+                "FROM " + TB_BASIC + " " +
+                "WHERE " + COL_WORD + "=\"" + zhWord.trim() + "\"";
+        Cursor c = myDB.rawQuery(query, null);
+        while(c.moveToNext()){
+            return c.getString(0);
+        }
+        return null;
+    }
+
+    public String getSourceWord(String jpWord){
+        String query = "SELECT " +
+                COL_WORD + " " +
+                "FROM " + TB_BASIC + " " +
+                "WHERE " + COL_TRANS + "=\"" + jpWord.trim() + "\"";
+        Cursor c = myDB.rawQuery(query, null);
+        while(c.moveToNext()){
+            return c.getString(0);
+        }
+        return null;
+    }
+
+    public HashMap<String, String> getEntryById(int wid){
+        Cursor c = myDB.rawQuery("SELECT " +
+                DBHelper.COL_WORD + ", " +
+                DBHelper.COL_TRANS +  " " +
+                " FROM " + TB_BASIC +
+                " WHERE _id=" + wid + ";", null);
+        if (c == null) return null;
+        if (!c.moveToFirst()) return null;
+        HashMap<String, String> res = new HashMap<>();
+        res.put(DBHelper.COL_WORD, c.getString(0));
+        res.put(DBHelper.COL_TRANS, c.getString(1));
+        res.put(COL_ID, String.format("%d", wid));
+        return res;
+    }
+
+    public int rowCounts(int lesson){
+        String query = "SELECT COUNT(*)" +
+                " FROM " + TB_BASIC + " WHERE " +
+                COL_LESSON + "=" + String.format("%d", lesson);
+        Cursor c = myDB.rawQuery(query, null);
+        c.moveToFirst();
+        return c.getInt(0);
+    }
+
+    public int getRandId(int lesson){
+        String query = "SELECT " + COL_ID +
+                " FROM " + TB_BASIC + " WHERE " +
+                COL_LESSON + "=" + Settings.curLesson;
+        if(lesson < 0){
+            query = "SELECT " + COL_ID +
+                    " FROM " + TB_BASIC + " COUNT 200";
+        }
+        Log.i("RandomIdQuery:", query);
+        Cursor c = myDB.rawQuery(query, null);
+        ArrayList<Integer> listIDs = new ArrayList();
+        while(c.moveToNext()){
+            listIDs.add(c.getInt(0));
+        }
+        if(listIDs.size() <=0)return -1;
+        int res = listIDs.get( Math.abs(rand.nextInt()) % listIDs.size());
+        Log.i("RandomId:", String.format(Locale.ENGLISH, "%d", res));
+        return res;
     }
 }

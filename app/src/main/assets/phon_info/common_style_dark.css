@@ -25,6 +25,7 @@ body{
 
 table{
     margin: 0 auto;
+	border-collapse: collapse;
 }
 
 
@@ -45,9 +46,14 @@ ul{
 }
 .pron{
 	border: none;
-	font-size: larger;
+	font-size: small;
 	background-color: #223E68;
 	color: #BD9A6B;
+}
+
+th, td{
+	text-align: center;
+	
 }
 
 .

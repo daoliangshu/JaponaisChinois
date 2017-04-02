@@ -28,6 +28,7 @@ public class SettingSlidePageFragment extends Fragment {
     private Spinner lessonSpinner;
     private Spinner modeSpinner;
     private Spinner entryTypeSpinner;
+    private Spinner emptyRatioSpinner;
     ViewGroup rView;
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -92,6 +93,10 @@ public class SettingSlidePageFragment extends Fragment {
 
             }
         });
+
+        lessonSpinner.setSelection(Settings.curLesson);
+
+
 
         //mode
         modeSpinner = (Spinner) rootView.findViewById(R.id.mode_list);
@@ -158,6 +163,8 @@ public class SettingSlidePageFragment extends Fragment {
                 parentActivity.updateInterval();
             }
 
+
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -165,6 +172,7 @@ public class SettingSlidePageFragment extends Fragment {
         });
 
 
+        modeSpinner.setSelection(Settings.getCurIntervalPos());
         //display mode
         entryTypeSpinner = (Spinner) rootView.findViewById(R.id.display_mode_list);
         //Array to show in lessonSpinner:
@@ -210,6 +218,61 @@ public class SettingSlidePageFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+
+
+        //display mode
+        emptyRatioSpinner = (Spinner) rootView.findViewById(R.id.empty_ratio);
+        //Array to show in lessonSpinner:
+        final String[] emptyRatioValues = getResources().getStringArray(R.array.empty_word_ratio);
+        ArrayAdapter<String> emptyRatioAdapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                android.R.id.text1, emptyRatioValues) {
+            @Override
+            public boolean isEnabled(int position) {
+                return super.isEnabled(position);
+            }
+
+            @Override
+            public boolean areAllItemsEnabled() {
+                return super.areAllItemsEnabled();
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View v = convertView;
+                if (v == null) {
+                    Context mContext = this.getContext();
+                    LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    v = vi.inflate(R.layout.support_simple_spinner_dropdown_item, null);
+                }
+
+                TextView tv = (TextView) v.findViewById(android.R.id.text1);
+                tv.setText(emptyRatioValues[position]);
+                tv.setTextColor(ContextCompat.getColor(getContext(), R.color.colorBlueLight));
+                tv.setBackgroundResource(R.drawable.button);
+                return v;
+            }
+        };
+        emptyRatioSpinner.setAdapter(emptyRatioAdapter);
+        for(int i=0; i< emptyRatioValues.length; i++){
+            if(Math.abs( Float.valueOf(emptyRatioValues[1]) - Settings.curEmptyRatio) < 1.0f){
+                emptyRatioSpinner.setSelection(i);
+            }
+        }
+        //listener listview click
+        emptyRatioSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                parentActivity.resetCumul();
+                Settings.curEmptyRatio = Float.valueOf(emptyRatioValues[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Settings.curEmptyRatio = 0.5f;
             }
         });
 

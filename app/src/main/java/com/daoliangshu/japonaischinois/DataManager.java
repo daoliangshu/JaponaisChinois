@@ -158,6 +158,9 @@ public class DataManager {
                 saveBundle.put("entryType", String.format(Locale.ENGLISH, "%d", Settings.entryType));
                 saveBundle.put("curLesson", String.format(Locale.ENGLISH, "%d", Settings.curLesson));
                 saveBundle.put("curInterval", String.format(Locale.ENGLISH, "%d", Settings.curInterval));
+                saveBundle.put("curEmptyRatio", String.format(Locale.ENGLISH,
+                                                "%f", Settings.curEmptyRatio));
+
                 for (Map.Entry<String, String> entry : saveBundle.entrySet()) {
                     String line = entry.getKey() + " // " + entry.getValue();
                     out.write(line);
@@ -196,6 +199,8 @@ public class DataManager {
             Settings.curLesson = Integer.valueOf(value);
         } else if (key.equals("curInterval")){
             Settings.curInterval = Integer.valueOf(value);
+        }else if (key.equals("curEmptyRatio")){
+            Settings.curEmptyRatio = Float.valueOf(value);
         }
     }
 

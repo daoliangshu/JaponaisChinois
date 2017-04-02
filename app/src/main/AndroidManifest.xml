@@ -12,10 +12,13 @@
         <activity android:name=".VocabularyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <activity android:name=".lettrabulle.LettrabulleActivity">
+        </activity>
+        <activity android:name=".lettrabulle.vocab.VocabularyActivity">
+        </activity>
+    </application>
 </manifest>

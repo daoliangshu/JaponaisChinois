@@ -1,6 +1,7 @@
 package com.daoliangshu.japonaischinois;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
+import com.daoliangshu.japonaischinois.lettrabulle.LettrabulleActivity;
 
 /**
  * Created by daoliangshu on 2/5/17.
@@ -95,15 +98,26 @@ public class MainSlidePageFragment extends Fragment {
             }
         });
 
-        Button lookInfoButton = (Button) rootView.findViewById(R.id.button_back0);
-        lookInfoButton.setOnClickListener(new View.OnClickListener() {
+        Button goToGameButton = (Button) rootView.findViewById(R.id.button_back0);
+        goToGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent(getContext(), LettrabulleActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        Button goToInfoButton = (Button) rootView.findViewById(R.id.button_info);
+        goToInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 parentActivity.flipView(1);
+
             }
         });
-        lookInfoButton.setEnabled(false);
-        lookInfoButton.setVisibility(View.GONE);
+
+        goToGameButton.setEnabled(true);
 
         Button mSpeakButton = (Button) rootView.findViewById(R.id.speak_button);
         mSpeakButton.setOnClickListener(new View.OnClickListener() {
