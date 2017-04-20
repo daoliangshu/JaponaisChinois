@@ -50,7 +50,7 @@
     <string name="quit">Quitter/離開</string>
     <string name="score">Points/分數:</string>
 
-
+    <string name="btn_switch_dst_word_mode">かんじ / 漢字</string>
     <string name="lb_lesson_chooser_main">Select a lesson</string>
     <string name="lb_lesson_search_way">Search by:</string>
     <string name="btn_begin">C\'est parti!</string>
@@ -102,5 +102,8 @@
     <string name="choose_search_way">請選擇掃找方法：</string>
     <string name="choose_sub_search_way">[a changer]</string>
 
+
+    <string name="btn_select_all">選所有的</string>
+    <string name="btn_unselect_all">取消選擇</string>
 
 </resources>

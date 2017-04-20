@@ -47,7 +47,6 @@ public class LettrabulleView extends SurfaceView implements SurfaceHolder.Callba
 
 
     /*------State------------------------------*/
-    private int mode = LB_Config.mode;
     private int currentState = 1;
     private int scrW;
     private int scrH;
@@ -373,11 +372,12 @@ public class LettrabulleView extends SurfaceView implements SurfaceHolder.Callba
         /* Update current word */
 
             /* Update infoPanel information when order has changed */
-        String word = wordLines.get(tops.get(0)[0]).getWord();
+        String dstWord = wordLines.get(tops.get(0)[0]).getWord();
 
-        if (wordToTransMap.containsKey(word) && wordToTransMap.get(word) != null) {
-            String str = wordToTransMap.get(word);
-            this.rootActivity.updateInfoWord(word, str);
+        if (wordToTransMap.containsKey(dstWord) && wordToTransMap.get(dstWord) != null) {
+            String srcWord1 = wordToTransMap.get(dstWord);
+
+            this.rootActivity.updateInfoWord(dstWord, srcWord1, myDBHelper.getTrans2FromJp(dstWord));
         }
     }
 
@@ -568,6 +568,9 @@ public class LettrabulleView extends SurfaceView implements SurfaceHolder.Callba
             case LB_Config.MODE_VOC_LIST_DATABASE:
                 res = getRandFromVocList();
                 break;
+            case LB_Config.MODE_FROM_DEFINED_LIST:
+                res = getRandFromDefinedList();
+                break;
             default:
                 return "erreur fatale";
         }
@@ -583,14 +586,44 @@ public class LettrabulleView extends SurfaceView implements SurfaceHolder.Callba
             if (iteCount > 15) break;
         } while (res == null || res.get(DBHelper.COL_TRANS).length() > BubbleLine.MAX_LETTER);
         if (res == null) return "erreur fatale";
-        updateWordToTransMap(res.get(DBHelper.COL_TRANS));
-        return res.get(DBHelper.COL_TRANS);
+        String str = null;
+        if(LB_Config.curDstType == LB_Config.DST_FROM_TRANS_MIXED &&
+                rand.nextBoolean() && res.get(DBHelper.COL_TRANS2) != null){
+            updateWordToTransMap(res.get(DBHelper.COL_TRANS2));
+            return res.get(DBHelper.COL_TRANS2);
+        }else if(LB_Config.curDstType == LB_Config.DST_FROM_TRANS_2 &&
+                res.get(DBHelper.COL_TRANS2) != null){
+            updateWordToTransMap(res.get(DBHelper.COL_TRANS2));
+            return res.get(DBHelper.COL_TRANS2);
+        }else{
+            updateWordToTransMap(res.get(DBHelper.COL_TRANS));
+            return res.get(DBHelper.COL_TRANS);
+        }
+
     }
 
     private String getRandFromVocList() {
         if (LB_Config.vocList.size() <= 0) return null;
         int randIndex = Math.abs(rand.nextInt() % LB_Config.vocList.size());
-        String str = LB_Config.vocList.get(randIndex).getWord();
+        String str = null;
+        str = LB_Config.vocList.get(randIndex).getWord();
+        updateWordToTransMap(str);
+        if (str == null) return "fatale erreur";
+        return str;
+    }
+
+    private String getRandFromDefinedList() {
+        if (rootActivity.mVocList.size() <= 0) return null;
+        int randIndex = Math.abs(rand.nextInt() % rootActivity.mVocList.size());
+        String str = null;
+        if(LB_Config.curDstType == LB_Config.DST_FROM_TRANS_2){
+            str = rootActivity.mVocList.get(randIndex).get(DBHelper.COL_TRANS1_2);
+        }else if(LB_Config.curDstType == LB_Config.DST_FROM_TRANS_MIXED && rand.nextBoolean()){
+            str = rootActivity.mVocList.get(randIndex).get(DBHelper.COL_TRANS1_2);
+        }
+        if(str == null){
+            str = rootActivity.mVocList.get(randIndex).get(DBHelper.COL_TRANS);
+        }
         updateWordToTransMap(str);
         if (str == null) return "fatale erreur";
         return str;
@@ -609,7 +642,8 @@ public class LettrabulleView extends SurfaceView implements SurfaceHolder.Callba
         if (!wordToTransMap.containsKey(newJapaneseWord)) {
             switch (LB_Config.mode) {
                 case LB_Config.MODE_VOC_LIST_DATABASE: //(1)
-                    wordToTransMap.put(newJapaneseWord, myDBHelper.getWordTrans(newJapaneseWord));
+                case LB_Config.MODE_FROM_DEFINED_LIST:
+                    wordToTransMap.put(newJapaneseWord, myDBHelper.getSourceWord(newJapaneseWord));
                     break;
                 case LB_Config.MODE_RANDOM_DATABASE: //(2)
                     String res =
@@ -621,6 +655,33 @@ public class LettrabulleView extends SurfaceView implements SurfaceHolder.Callba
                                 split the String to obtain a  String[] to map
                              */
                             wordToTransMap.put(newJapaneseWord,
+                                    res);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    public void updateWordToTransMapBis(String newKanjiWord) {
+        if (!wordToTransMap.containsKey(newKanjiWord)) {
+            switch (LB_Config.mode) {
+                case LB_Config.MODE_VOC_LIST_DATABASE: //(1)
+                case LB_Config.MODE_FROM_DEFINED_LIST:
+                    wordToTransMap.put(newKanjiWord, myDBHelper.getSourceWordFromAlt(newKanjiWord));
+                    break;
+                case LB_Config.MODE_RANDOM_DATABASE: //(2)
+                    String res =
+                            myDBHelper.getSourceWordFromAlt(newKanjiWord);
+                    if (res != null) {
+                        try {
+                            /* Get the translation found in the first meaning of
+                                the first returned result.
+                                split the String to obtain a  String[] to map
+                             */
+                            wordToTransMap.put(newKanjiWord,
                                     res);
                         } catch (Exception ex) {
                             ex.printStackTrace();

@@ -157,6 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
             android:layout_marginTop="15dp"
+
             android:textAllCaps="false"
             android:background="@drawable/button2"
             android:text="@string/save_settings">

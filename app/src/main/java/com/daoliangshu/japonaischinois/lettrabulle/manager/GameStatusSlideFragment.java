@@ -9,10 +9,12 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.daoliangshu.japonaischinois.DBHelper;
 import com.daoliangshu.japonaischinois.R;
+import com.daoliangshu.japonaischinois.lettrabulle.LB_Config;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -29,6 +31,7 @@ public class GameStatusSlideFragment extends Fragment {
     private TextView mTransView;
     private TextView mTime;
     private TextView mScore;
+    private Button mBtnSwitchDstWord;
     private Timer timer;
     private boolean timeRunning = true;
     private int timerValue;
@@ -47,6 +50,15 @@ public class GameStatusSlideFragment extends Fragment {
         parentActivity = getActivity();
         timerValue = 0;
         maxTimerValue = 9000;
+
+        mBtnSwitchDstWord = (Button)rootView.findViewById(R.id.btn_status_switch);
+        mBtnSwitchDstWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleDstMode();
+            }
+        });
+
         mWordView = (TextView) rootView.findViewById(R.id.bulle_word_to_guess);
         mTransView = (TextView) rootView.findViewById(R.id.bulle_trans_of_word);
         mTime = (TextView) rootView.findViewById(R.id.bulle_time);
@@ -81,8 +93,34 @@ public class GameStatusSlideFragment extends Fragment {
             }
         };
         timer.schedule(timerTaskObj, 0, 1500);
-
+        toggleDstMode();
         return rootView;
+    }
+
+
+    public void toggleDstMode() {
+        int modes[] = {LB_Config.DST_FROM_TRANS_1, LB_Config.DST_FROM_TRANS_MIXED };
+        int current = 0;
+        for(int i=0; i < modes.length; i++){
+            if(modes[i] == LB_Config.curDstType){
+                current = i;
+                break;
+            }
+        }
+        LB_Config.curDstType = modes[ (current + 1) % modes.length ];
+        String mArray[] = getContext().getResources().getStringArray(R.array.dst_word_mode);
+        switch( modes[ (current + 1) % modes.length]){
+            case LB_Config.DST_FROM_TRANS_1:
+                mBtnSwitchDstWord.setText(mArray[0]);
+                break;
+            case LB_Config.DST_FROM_TRANS_2:
+                mBtnSwitchDstWord.setText(mArray[1]);
+                break;
+            case LB_Config.DST_FROM_TRANS_MIXED:
+                mBtnSwitchDstWord.setText(mArray[2]);
+                break;
+            default:
+        }
     }
 
 
@@ -107,6 +145,8 @@ public class GameStatusSlideFragment extends Fragment {
             setWord(newWord);
         }
     }
+
+
 
     public void setTrans(String newTrans) {
         this.mTransView.setText(newTrans);

@@ -11,6 +11,16 @@
         <item>Leçon 7</item>
         <item>Leçon 8</item>
         <item>Leçon 9</item>
+        <item>Leçon 10</item>
+        <item>Leçon 11</item>
+        <item>Leçon 12</item>
+        <item>Leçon 13</item>
+    </string-array>
+
+    <string-array name="dst_word_mode">
+        <item>Sans Kanji</item>
+        <item>Max Kanji</item>
+        <item>Mix</item>
     </string-array>
 
     <string-array name="empty_word_ratio">

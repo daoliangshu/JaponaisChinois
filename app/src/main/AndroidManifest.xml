@@ -20,5 +20,8 @@
         </activity>
         <activity android:name=".lettrabulle.vocab.VocabularyActivity">
         </activity>
+        <activity android:name=".lettrabulle.grammar.GrammarActivity">
+
+        </activity>
     </application>
 </manifest>

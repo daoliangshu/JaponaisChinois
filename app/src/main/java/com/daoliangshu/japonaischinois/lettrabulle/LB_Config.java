@@ -19,8 +19,17 @@ public class LB_Config {
     /*------Contants--------*/
     public static final int MODE_RANDOM_DATABASE = 0; // Fetch random words from database
     public static final int MODE_VOC_LIST_DATABASE = 1; // from voc list which uses database
+    public static final int MODE_FROM_DEFINED_LIST = 30;
     public static final int MODE_VOC_LIST_INDEPENDANT = 2; //from voc list ,which
 
+
+
+    //Control from which trans column the bubble line is formed.
+    //ex: japanese: TRANS_1 -> without kanji, TRANS_2 -> with kanji
+    public static final int DST_FROM_TRANS_1 = 0;
+    public static final int DST_FROM_TRANS_MIXED = 1;
+    public static final int DST_FROM_TRANS_2 = 3;
+    public static int curDstType = DST_FROM_TRANS_MIXED;
 
     /*-----In game config--------*/
     public static int mode = LB_Config.MODE_RANDOM_DATABASE;

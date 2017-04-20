@@ -7,8 +7,9 @@ import java.util.Random;
 
 /**
  * Created by daoliangshu on 3/11/17.
- * The main purpose of this class is to provide ways to
- * order the vocubulary display
+ * Here should be impleented the different algorithms to
+ * set how the vocabulary should be order.
+ * Note: Currently only support weighted radomized order (bug in implementation)
  */
 
 public class VocabularyManager {
@@ -34,7 +35,9 @@ public class VocabularyManager {
     }
 
 
+
     public void previous(){
+        if(voc.size() <= 0)return;
         if(current != first){
             current -= 1;
             if(current < 0)current = historyIndexes.length-1;
@@ -42,28 +45,42 @@ public class VocabularyManager {
     }
 
     public void next(){
-        if(current != last){
-            current = (current + 1) % historyIndexes.length;
+        if(voc.size() <= 0)return;
+        switch(Settings.curNextWordPolicy){
+            case Settings.WORD_WEIGHTED_RANDOM_NEXT:
+                if(current != last){
+                    current = (current + 1) % historyIndexes.length;
+                }
+                else if(size > 6){
+                    //(1) fethch 5 randomize index
+                    HashMap<Integer, Float> mCandidates = new HashMap<>();
+                    for(int i=0; i< 5; i++){
+                        int k;
+                        do {
+                            k = Math.abs(rand.nextInt()) % size;
+                        }while(k == historyIndexes[current]);
+                        if(mCandidates.containsKey(k)){
+                            mCandidates.
+                                    put(k, mCandidates.get(k)+ (float)voc.get(k).weight*0.7f);
+                        }
+                        mCandidates.put(k, (float)voc.get(k).weight*1f);
+                    }
+                    int nextWordIndex = getIndexWithMaxWeight(mCandidates);
+                    setCurrent(nextWordIndex);
+                }
+                else{
+                    setCurrent(Math.abs(rand.nextInt())%size);
+                }
+                if(voc.size() > 0)
+                    voc.get(historyIndexes[current]).decreaseWeight(1);
+                break;
+            case Settings.WORD_LINEAR_NEXT:
+                setCurrent( (current + 1)%size);
+                break;
+            default:
+
         }
-        else if(size > 6){
-            //(1) fethch 5 randomize index
-            HashMap<Integer, Float> mCandidates = new HashMap<>();
-            for(int i=0; i< 5; i++){
-                int k;
-                do {
-                    k = Math.abs(rand.nextInt()) % size;
-                }while(k == historyIndexes[current]);
-                if(mCandidates.containsKey(k))mCandidates.
-                        put(k, mCandidates.get(k)+ voc.get(k).weight*0.7f);
-                mCandidates.put(k, voc.get(k).weight*1f);
-            }
-            int nextWordIndex = getIndexWithMaxWeight(mCandidates);
-            setCurrent(nextWordIndex);
-        }
-        else{
-            setCurrent(Math.abs(rand.nextInt())%size);
-        }
-        voc.get(historyIndexes[current]).decreaseWeight(1);
+
     }
 
     public void setCurrent(int index){
@@ -90,7 +107,7 @@ public class VocabularyManager {
         return max;
     }
 
-    public int getIndex(){ return current<0?-1:historyIndexes[current]; }
+    public int getIndex(){ return current<0?-1:(current >= historyIndexes.length)?-1:historyIndexes[current]; }
 
 
 }
@@ -108,7 +125,8 @@ class WeightedVoc{
 
     public void increaseWeight(int time){
         if(time > 0){
-            weight += (float)time* 0.20f;
+            if(weight > 0.0f)weight += (float)time* 1.0f;
+            else weight = (float)time* 1.0f;
         }
         else if(--update_range <= 0){
             weight += 0.05f;

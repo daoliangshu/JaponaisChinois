@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="30dp"
+    android:background="@drawable/mur1">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:layout_margin="6dp"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:background="@drawable/button_floral_yellow"
+            android:id="@+id/btn_status_switch"
+            android:text="@string/btn_switch_dst_word_mode"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical"
+        android:layout_gravity="fill_vertical|fill_horizontal"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/bulle_word_to_guess"
+            android:scrollbars="vertical"
+            android:textColor="@color/lightCoral"
+            android:gravity="center"
+            android:textSize="16sp" />
+        <!-- Component displaying the translation of the current word -->
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/bulle_trans_of_word"
+            android:textColor="@color/lightGrey"
+            android:text="@string/simple_past"
+            android:gravity="center"
+            android:scrollbars="vertical"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="0.3"
+        android:orientation="vertical"
+        android:layout_gravity="fill_vertical|fill_horizontal"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_height="35dp"
+            android:layout_width="match_parent"
+            android:id="@+id/bulle_time"
+            android:gravity="right"
+            android:textColor="@color/lightGrey"
+            android:textSize="23sp" />
+        <!-- Component displaying the score -->
+        <TextView
+            android:layout_height="35dp"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:text="0"
+            android:id="@+id/bulle_score"
+            android:textColor="@color/lightYellow"
+            android:textSize="23sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

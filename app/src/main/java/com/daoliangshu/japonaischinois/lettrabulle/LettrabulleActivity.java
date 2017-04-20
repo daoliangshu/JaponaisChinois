@@ -26,6 +26,7 @@ import com.daoliangshu.japonaischinois.lettrabulle.vocab.VocabularyUnit;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Created by daoliangshu on 2016/11/8.
@@ -36,6 +37,7 @@ public class LettrabulleActivity extends AppCompatActivity {
     private LettrabulleView gameView;
     private DBHelper dbHelper;
     private ViewPager mGameMenuPager;
+    public ArrayList<HashMap<String, String>> mVocList;
 
     private GameSettingsSlideFragment gameSettings;
     private GameStatusSlideFragment gameStatus;
@@ -48,20 +50,35 @@ public class LettrabulleActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.lettrabulle_layout);
         Bundle extra = getIntent().getExtras();
-        if (extra != null) {
-            Parcelable[] ps = extra.getParcelableArray("vocUnits");
-            VocabularyUnit[] vocUnits = new VocabularyUnit[ps.length];
-            System.arraycopy(ps, 0, vocUnits, 0, ps.length);
-            LB_Config.vocList = new ArrayList<>(Arrays.asList(vocUnits));
-            LB_Config.mode = LB_Config.MODE_VOC_LIST_DATABASE;
-        } else {
-            LB_Config.mode = LB_Config.MODE_RANDOM_DATABASE;
-        }
+
         try {
             dbHelper = new DBHelper(getApplicationContext());
         }catch(SQLException sqle){
             sqle.printStackTrace();
         }
+
+        if (extra != null) {
+
+            if(extra.containsKey("vocCodes")){
+                Integer[] vocList = extra.getIntegerArrayList("vocCodes").
+                        toArray(new Integer[extra.getIntegerArrayList("vocCodes").size()]);
+                LB_Config.mode = LB_Config.MODE_FROM_DEFINED_LIST;
+                mVocList = new ArrayList<>();
+                for(int i=0; i<vocList.length; i++){
+                    mVocList.add(dbHelper.getEntryById(vocList[i]));
+                }
+            }
+            else if(extra.containsKey("vocUnits")){
+            Parcelable[] ps = extra.getParcelableArray("vocUnits");
+            VocabularyUnit[] vocUnits = new VocabularyUnit[ps.length];
+            System.arraycopy(ps, 0, vocUnits, 0, ps.length);
+            LB_Config.vocList = new ArrayList<>(Arrays.asList(vocUnits));
+            LB_Config.mode = LB_Config.MODE_VOC_LIST_DATABASE;
+            }
+        } else {
+            LB_Config.mode = LB_Config.MODE_RANDOM_DATABASE;
+        }
+
             gameView = (LettrabulleView) findViewById(R.id.lettrabulle_view);
         gameView.setActivity(this);
 
@@ -113,19 +130,21 @@ public class LettrabulleActivity extends AppCompatActivity {
 
     String str;
     String strZh;
+    String strSecond;
 
     Thread thread = new Thread(new Runnable() {
         public void run() {
             if (gameStatus != null) {
                 gameStatus.setWord(strZh);
-                gameStatus.setTrans(strZh);
+                gameStatus.setTrans(strSecond);
             }
         }
     });
 
-    public void updateInfoWord(String str, String strZh) {
+    public void updateInfoWord(String str, String strZh, String strSecond) {
         this.str = str;
         this.strZh = strZh;
+        this.strSecond = strSecond;
         runOnUiThread(thread);
     }
 
