@@ -15,6 +15,15 @@
         <item>Leçon 11</item>
         <item>Leçon 12</item>
         <item>Leçon 13</item>
+        <item>Leçon 14</item>
+        <item>Leçon 15</item>
+        <item>Leçon 16</item>
+        <item>Leçon 17</item>
+        <item>Leçon 18</item>
+        <item>Leçon 19</item>
+        <item>Leçon 20</item>
+        <item>Leçon 21</item>
+        <item>Leçon 22</item>
     </string-array>
 
     <string-array name="dst_word_mode">
@@ -29,6 +38,7 @@
         <item>0.5f</item>
         <item>0.75f</item>
         <item>0.85f</item>
+        <item>1.00f</item>
 
     </string-array>
 

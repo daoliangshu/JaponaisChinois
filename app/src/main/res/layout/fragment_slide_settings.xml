@@ -5,29 +5,34 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/label_lesson_list"
+                android:id="@+id/label_mode_choose"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/trans_white"
                 android:text="@string/lesson_prompt" />
 
             <Spinner
-                android:id="@+id/lesson_list"
+                android:id="@+id/spinner_mode_choose"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:popupBackground="@android:color/transparent"
@@ -35,6 +40,60 @@
 
                 />
         </LinearLayout>
+
+        <ViewFlipper
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/flipper_voc_chooser_mode"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/label_lesson_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trans_white"
+                    android:text="@string/lesson_prompt" />
+
+                <Spinner
+                    android:id="@+id/lesson_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:popupBackground="@android:color/transparent"
+                    android:background="@color/trans_white"
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/label_category_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trans_white"
+                    android:text="@string/category_label" />
+
+                <Spinner
+                    android:id="@+id/spinner_category_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:popupBackground="@android:color/transparent"
+                    android:background="@color/trans_white"
+
+                    />
+            </LinearLayout>
+
+        </ViewFlipper>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,6 +119,15 @@
 
         </LinearLayout>
 
+        <Switch
+            android:id="@+id/switch_day_night"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/switch_night_day_mode" />
+
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
 
         <CheckBox
             android:id="@+id/auto_speak_check"
@@ -97,11 +165,6 @@
             android:background="@color/trans_white"
             android:text="@string/hide_pron" />
 
-        <Switch
-            android:id="@+id/switch_day_night"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/switch_night_day_mode" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,6 +190,9 @@
 
         </LinearLayout>
 
+        <android.support.v4.widget.Space
+            android:layout_height="1dp"
+            android:layout_width="match_parent" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -151,6 +217,85 @@
 
         </LinearLayout>
 
+        <android.support.v4.widget.Space
+            android:layout_height="3dp"
+            android:layout_width="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/label_source_lang_chooser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/trans_white"
+                android:text="@string/source_lang_main" />
+
+            <Spinner
+                android:id="@+id/spinner_source_lang_chooser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/trans_white"
+                android:popupBackground="@android:color/transparent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/label_source_lang_chooser2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/trans_white"
+                android:text="@string/source_lang_second" />
+
+            <Spinner
+                android:id="@+id/spinner_source_lang_chooser2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/trans_white"
+                android:popupBackground="@android:color/transparent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/label_target_lang_chooser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/trans_white"
+                android:text="@string/target_lang_main" />
+
+            <Spinner
+                android:id="@+id/spinner_target_lang_chooser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/trans_white"
+                android:popupBackground="@android:color/transparent" />
+
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_height="3dp"
+            android:layout_width="match_parent" />
         <Button
             android:id="@+id/save_config_button"
             android:layout_width="wrap_content"

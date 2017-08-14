@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JaponaisChinois1.0</string>
+    <string name="app_name">JpGatsuGatsu</string>
 
     <string name="next_button">Suivant</string>
     <string name="prev_button">Précédent</string>
@@ -25,7 +25,6 @@
     <string name="no_retrieved_value">Pas de valeur</string>
 
     <string name="confirm_quit">Deux fois la touche retour pour quitter.</string>
-
 
 
     <string name="level">Niveau/程度</string>
@@ -103,7 +102,11 @@
     <string name="choose_sub_search_way">[a changer]</string>
 
 
+    <string name="btn_go_grammar">Fiches</string>
     <string name="btn_select_all">選所有的</string>
     <string name="btn_unselect_all">取消選擇</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>

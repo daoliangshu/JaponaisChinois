@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.daoliangshu.japonaischinois.DBHelper;
 import com.daoliangshu.japonaischinois.R;
-import com.daoliangshu.japonaischinois.lettrabulle.LB_Config;
+import com.daoliangshu.japonaischinois.core.DBHelper;
+import com.daoliangshu.japonaischinois.lettrabulle.opengl.util.Config;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -99,25 +99,38 @@ public class GameStatusSlideFragment extends Fragment {
 
 
     public void toggleDstMode() {
-        int modes[] = {LB_Config.DST_FROM_TRANS_1, LB_Config.DST_FROM_TRANS_MIXED };
+        int modes[];
+        if(!DBHelper.getPhoneticTable(DBHelper.target).equals(DBHelper.target)){
+            //If the target language has two different columns
+            modes=new int[] {Config.DST_FROM_TRANS_1,
+                    Config.DST_FROM_TRANS_MIXED,
+                    Config.DST_FROM_TRANS_2};
+        }else{
+            modes=new int[] {Config.DST_FROM_TRANS_1,
+                    };
+        }
+
         int current = 0;
         for(int i=0; i < modes.length; i++){
-            if(modes[i] == LB_Config.curDstType){
+            if(modes[i] == Config.curDstType){
                 current = i;
                 break;
             }
         }
-        LB_Config.curDstType = modes[ (current + 1) % modes.length ];
+        Config.curDstType = modes[ (current + 1) % modes.length ];
         String mArray[] = getContext().getResources().getStringArray(R.array.dst_word_mode);
         switch( modes[ (current + 1) % modes.length]){
-            case LB_Config.DST_FROM_TRANS_1:
-                mBtnSwitchDstWord.setText(mArray[0]);
+            case Config.DST_FROM_TRANS_1:
+                mBtnSwitchDstWord.setBackgroundResource(R.drawable.kana_button);
+                mBtnSwitchDstWord.setText("");
                 break;
-            case LB_Config.DST_FROM_TRANS_2:
-                mBtnSwitchDstWord.setText(mArray[1]);
+            case Config.DST_FROM_TRANS_2:
+                mBtnSwitchDstWord.setBackgroundResource(R.drawable.han_button);
+                mBtnSwitchDstWord.setText("");
                 break;
-            case LB_Config.DST_FROM_TRANS_MIXED:
-                mBtnSwitchDstWord.setText(mArray[2]);
+            case Config.DST_FROM_TRANS_MIXED:
+                mBtnSwitchDstWord.setBackgroundResource(R.drawable.mix_button);
+                mBtnSwitchDstWord.setText("");
                 break;
             default:
         }

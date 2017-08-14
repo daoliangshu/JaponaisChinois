@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="array_mode_choose_voc">
+        <item name="lesson">Choisir une Leçon</item>
+        <item name="choose_mode_category">Choisir une Catégorie</item>
+    </string-array>
+
+    <string name="category_label">Catégorie</string>
+
+
+    <string-array name="categories">
+        <item name="consummer" id="0">Société de Consommation</item>
+        <item name="economy" id="1">Economie</item>
+        <item name="science" id="2">Science</item>
+        <item name="quantity" id="3">Expression de la Quantité</item>
+        <item name="beauty" id="4">Beauté</item>
+        <item name="shops" id="5">Magasins et Services</item>
+        <item name="animals" id="6">Animaux</item>
+        <item name="food" id="7">Nourriture</item>
+        <item name="education" id="8">Education</item>
+        <item name="computer" id="9">Ordinateur</item>
+        <item name="justice" id="10">Justice</item>
+        <item name="politic" id="11">Politique</item>
+        <item name="programmation" id="12">Programmation</item>
+        <item name="nature" id="13">Nature</item>
+        <item name="body" id="14">Corps</item>
+        <item name="weather" id="15">Meteo</item>
+        <item name="cloth" id="16">Habits</item>
+        <item name="colors" id="17">Couleurs</item>
+        <item name="numbers" id="18">Nombres</item>
+        <item name="time" id="19">Temps</item>
+    </string-array>
+
+</resources>

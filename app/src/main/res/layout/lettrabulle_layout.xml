@@ -20,18 +20,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:background="@android:color/black"
                 android:weightSum="1">
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/game_menu_pager"
                     android:layout_width="match_parent"
+                    android:background="@color/darkdarkdarkBlue"
                     android:layout_height="0dp"
                     android:layout_weight="0.125"></android.support.v4.view.ViewPager>
 
-                <com.daoliangshu.japonaischinois.lettrabulle.LettrabulleView
+                <com.daoliangshu.japonaischinois.lettrabulle.depreciated.LettrabulleView
                     android:id="@+id/lettrabulle_view"
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
+
                     android:layout_weight="0.875" />
             </LinearLayout>
 

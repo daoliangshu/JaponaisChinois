@@ -2,6 +2,8 @@ package com.daoliangshu.japonaischinois;
 import android.content.Context;
 import android.webkit.WebViewClient;
 
+import com.daoliangshu.japonaischinois.core.DBHelper;
+
 /**
  * Created by daoliangshu on 2/4/17.
  */
@@ -12,7 +14,7 @@ public class MyWebViewClient extends WebViewClient {
 
     public MyWebViewClient(Context context) {
         this.context = context;
-        // this.dbHelper = myDbHelper;
+        // this.myDBHelper = myDbHelper;
     }
 
 }

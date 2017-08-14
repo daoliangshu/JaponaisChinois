@@ -1,5 +1,7 @@
 package com.daoliangshu.japonaischinois;
 
+import com.daoliangshu.japonaischinois.core.Settings;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -125,8 +127,8 @@ class WeightedVoc{
 
     public void increaseWeight(int time){
         if(time > 0){
-            if(weight > 0.0f)weight += (float)time* 1.0f;
-            else weight = (float)time* 1.0f;
+            if(weight > 0.0f)weight += (float)time* 0.2f;
+            else weight = (float)time* 0.4f;
         }
         else if(--update_range <= 0){
             weight += 0.05f;

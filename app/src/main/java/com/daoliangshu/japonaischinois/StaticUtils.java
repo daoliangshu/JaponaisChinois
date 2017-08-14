@@ -4,6 +4,9 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.daoliangshu.japonaischinois.core.DataManager;
+import com.daoliangshu.japonaischinois.core.Settings;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +28,51 @@ public class StaticUtils {
     public static final int MODE_10_SEC = 3;
     public static final int MODE_15_SEC = 4;
     public static final int MODE_30_SEC = 5;
+
+
+
+    public static String getGrammarHtmlAsString(Context context, String filePrefix, int pageIndex) {
+        String fileName = filePrefix + pageIndex;
+        if (DataManager.getHtmlFile(pageIndex, Settings.isNightMode) == null) {
+            try {
+                FileInputStream is = new FileInputStream(new File(
+                        context.getFilesDir().toString() + "/gram/" + fileName + ".html"));
+                BufferedReader in =
+                        new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String text = "";
+                String temp;
+                while ((temp = in.readLine()) != null) {
+                    Log.i("Line", temp);
+                    text += new String(temp.getBytes(), "UTF-8");
+                }
+                in.close();
+                //insert method to retrieve sound on button
+                text = text.replace("%pron;", "class=\"pron\" type=\"button\"  onclick=\"pron.performClick(this.value);\"");
+                text = text.replace("%em;", "<span class=\"big1\">");
+                text = text.replace("%/em;", "</span>");
+                text = text.replace("%em2;", "<div class=\"myh1\">");
+                text = text.replace("%/em2;", "</div>");
+                text = text.replace("%small;", "<span class=\"small\">");
+                text = text.replace("%s;", "<span class=\"small\">");
+                text = text.replace("%/s;", "</span>");
+                text = text.replace("%/small;", "</span>");
+                if (text.contains("%common_style;")) {
+                    String style;
+                    if (Settings.isNightMode) style = getStyle(context, "common_style_dark");
+                    else style = getStyle(context, "common_style");
+                    if (style != null) {
+                        return text.replace("%common_style;", style);
+                    }
+                }
+                return text;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
+    }
 
 
 
@@ -59,6 +107,8 @@ public class StaticUtils {
                 text = text.replace("%/em2;", "</div>");
                 text = text.replace("%s;", "<span class=\"small\">");
                 text = text.replace("%/s;", "</span>");
+                text = text.replace("%small;", "<span class=\"small\">");
+                text = text.replace("%/small;", "</span>");
                 if (text.contains("%common_style;")) {
                     String style;
                     if (Settings.isNightMode) style = getStyle(context, "common_style_dark");

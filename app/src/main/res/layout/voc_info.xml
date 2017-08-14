@@ -3,24 +3,48 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="6dip" >
+    android:padding="1dip" >
 
     <CheckBox
         android:id="@+id/checkBox1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:maxWidth="100dp"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:text="CheckBox" />
+        android:text="CheckBox"
+        android:layout_alignParentTop="true"
+        android:paddingRight="10dp"/>
 
-    <TextView
-        android:id="@+id/code"
+    <ViewFlipper
+        android:id="@+id/flipper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/checkBox1"
-        android:layout_alignBottom="@+id/checkBox1"
-        android:layout_toRightOf="@+id/checkBox1"
-        android:text="TextView" />
+        android:layout_alignParentEnd="true"
+
+        >
+
+        <TextView
+            android:id="@+id/code"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:maxWidth="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="25sp"/>
+
+        <TextView
+            android:id="@+id/code2"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:maxWidth="250dp"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+    </ViewFlipper>
+
 
 </RelativeLayout>

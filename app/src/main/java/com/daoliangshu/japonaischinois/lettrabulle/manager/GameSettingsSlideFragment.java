@@ -7,12 +7,14 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.daoliangshu.japonaischinois.R;
-import com.daoliangshu.japonaischinois.lettrabulle.LB_Config;
+import com.daoliangshu.japonaischinois.lettrabulle.opengl.core.OpenGLES20Activity;
+import com.daoliangshu.japonaischinois.lettrabulle.opengl.util.Config;
 
 
 /**
@@ -48,7 +50,7 @@ public class GameSettingsSlideFragment extends Fragment {
 
         /*--------_Speed Settings -------------*/
         RadioGroup radioGroupSpeed = (RadioGroup) rootView.findViewById(R.id.radioGroupSpeed);
-        int currSpeed = LB_Config.getSpeedCode();
+        int currSpeed = Config.getSpeedCode();
         int selectedRadio = 0;
         switch (currSpeed) {
             case 0:
@@ -67,17 +69,26 @@ public class GameSettingsSlideFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.radio_slow:
-                        LB_Config.currentSpeed = LB_Config.SPEED_SLOW;
+                        Config.currentSpeed = Config.SPEED_SLOW;
                         break;
                     case R.id.radio_medium:
-                        LB_Config.currentSpeed = LB_Config.SPEED_MEDIUM;
+                        Config.currentSpeed = Config.SPEED_MEDIUM;
                         break;
                     case R.id.radio_fast:
-                        LB_Config.currentSpeed = LB_Config.SPEED_FAST;
+                        Config.currentSpeed = Config.SPEED_FAST;
                         break;
                     default:
-                        LB_Config.currentSpeed = LB_Config.SPEED_MEDIUM;
+                        Config.currentSpeed = Config.SPEED_MEDIUM;
                 }
+            }
+        });
+
+        Button mBtnBack = (Button)rootView.findViewById(R.id.lettrabulle_back);
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getActivity() instanceof OpenGLES20Activity)
+                    (getActivity()).finish();
             }
         });
 
