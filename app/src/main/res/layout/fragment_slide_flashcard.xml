@@ -4,7 +4,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:weightSum="1.0">
 
@@ -14,29 +14,32 @@
             android:layout_height="0dp"
             android:layout_weight="0.3"
             android:gravity="center">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/word_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:keepScreenOn="true"
+                    android:maxLines="3"
+                    android:scrollbars="vertical"
                     android:textColor="#33b5e5"
-                    android:maxLines = "3"
-                    android:scrollbars = "vertical"
                     android:textSize="35sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/word_content2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:keepScreenOn="true"
-                    android:maxLines = "3"
-                    android:scrollbars = "vertical"
+                    android:maxLines="3"
+                    android:scrollbars="vertical"
                     android:textColor="#33b5e5"
                     android:textSize="25sp"
                     android:textStyle="bold" />
@@ -71,21 +74,21 @@
 
                     <Button
                         android:id="@+id/prev_button"
-                        android:background="@drawable/button2"
-                        android:textColor="@color/dark_dark_blue"
                         android:layout_width="wrap_content"
                         android:layout_height="70dp"
+                        android:background="@drawable/button2"
+                        android:text="@string/prev_button"
                         android:textAllCaps="false"
-                        android:text="@string/prev_button" />
+                        android:textColor="@color/dark_dark_blue" />
 
                     <Button
+                        android:id="@+id/next_button"
                         android:layout_width="100dp"
                         android:layout_height="70dp"
-                        android:textColor="@color/dark_dark_blue"
-                        android:id="@+id/next_button"
-                        android:textAllCaps="false"
                         android:background="@drawable/button2"
-                        android:text="@string/next_button" />
+                        android:text="@string/next_button"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_dark_blue" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -96,35 +99,38 @@
                     <Button
                         android:id="@+id/button_back0"
                         android:layout_width="100dp"
-                        android:textAllCaps="false"
                         android:layout_height="59dp"
-                        android:background="@drawable/play_icon" />
-                    <Button android:id="@+id/button_info"
+                        android:background="@drawable/play_icon"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:id="@+id/button_info"
                         android:layout_width="100dp"
-                        android:textAllCaps="false"
                         android:layout_height="40dp"
                         android:background="@android:drawable/ic_menu_agenda"
-                        />
+                        android:textAllCaps="false" />
+
                     <Button
                         android:id="@+id/speak_button"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textAllCaps="false"
-                        android:textColor="@color/dark_dark_blue"
                         android:background="@drawable/button2"
+                        android:gravity="center"
                         android:keepScreenOn="true"
-                        android:text="@string/speak" />
+                        android:text="@string/speak"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_dark_blue" />
+
                     <Button
                         android:id="@+id/grammar_button"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textAllCaps="false"
-                        android:textColor="@color/dark_dark_blue"
                         android:background="@drawable/button2"
+                        android:gravity="center"
                         android:keepScreenOn="true"
-                        android:text="@string/btn_go_grammar" />
+                        android:text="@string/btn_go_grammar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_dark_blue" />
 
                 </LinearLayout>
 
@@ -187,12 +193,12 @@
             android:layout_height="0dp"
             android:layout_weight="0.1"
             android:orientation="horizontal">
+
             <Button
+                android:id="@+id/button_bottom_1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/button_black_yellow"
-                android:id="@+id/button_bottom_1"
-                />
+                android:background="@drawable/button_black_yellow" />
 
         </LinearLayout>
 
