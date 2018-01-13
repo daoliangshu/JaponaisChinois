@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="source_lang_main">Language Source 1</string>
+    <string name="source_lang_second">Language Source 2</string>
+    <string name="target_lang_main">Language Cible</string>
+
+    <string name="french">Français</string>
+    <string name="japanese">Japonais</string>
+    <string name="trad_chinese">Chinois Traditionnel</string>
+    <string name="english">Anglais</string>
+
+
+    <!-- dialog contents -->
+    <string name="save_dialog_content">Sauvegarde Réussie!</string>
+
+</resources>

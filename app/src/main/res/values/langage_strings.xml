@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="source_lang_main">Source Langage 1</string>
+    <string name="source_lang_second">Source Langage 2</string>
+    <string name="target_lang_main">Target Language 1</string>
+
+    <string name="french">French</string>
+    <string name="japanese">Japanese</string>
+    <string name="trad_chinese">Traditional Chinese</string>
+    <string name="english">English</string>
+
+    <string name="column_fr">fr_1</string>
+    <string name="column_zh">zh_1</string>
+    <string name="column_jp">jp_1</string>
+    <string name="column_en">en_1</string>
+</resources>

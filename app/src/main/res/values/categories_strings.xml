@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="array_mode_choose_voc">
+        <item name="lesson">Choose a Lesson</item>
+        <item name="choose_mode_category">Choose a Category</item>
+    </string-array>
+
+    <string name="category_label">Category</string>
+
+    <string-array name="categories">
+        <item name="consummer" id="0">Consummer Society</item>
+        <item name="economy" id="1">Economy</item>
+        <item name="science" id="2">Science</item>
+        <item name="quantity" id="3">Quantity</item>
+        <item name="beauty" id="4">Body Beauty</item>
+        <item name="shops" id="5">Shops</item>
+        <item name="animals" id="6">Animals</item>
+        <item name="food" id="7">Food</item>
+        <item name="education" id="8">Education</item>
+        <item name="computer" id="9">Computer</item>
+        <item name="justice" id="10">Justice</item>
+        <item name="politic" id="11">Politique</item>
+        <item name="programmation" id="12">Programmation</item>
+        <item name="nature" id="13">Nature</item>
+        <item name="body" id="14">Body</item>
+        <item name="weather" id="15">Weather</item>
+        <item name="cloth" id="16">Clothes</item>
+        <item name="colors" id="17">Colors</item>
+        <item name="numbers" id="18">Numbers</item>
+        <item name="time" id="19">Time</item>
+        <item name="family" id="20">Family</item>
+        <item name="professional" id="21">Professional</item>
+        <item name="society" id="22">Society</item>
+        <item name="culture" id="23">Culture</item>
+        <item name="medical" id="24">Medical</item>
+        <item name="trip" id="25">trip</item>
+        <item name="leisure" id="26">leisure</item>
+        <item name="opinion" id="27">Opinion</item>
+    </string-array>
+
+
+
+</resources>
