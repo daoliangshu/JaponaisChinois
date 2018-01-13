@@ -1,4 +1,4 @@
-package com.daoliangshu.japonaischinois.core;
+package com.daoliangshu.japonaischinois.core.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -10,10 +10,11 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.daoliangshu.japonaischinois.MyWebViewClient;
 import com.daoliangshu.japonaischinois.R;
-import com.daoliangshu.japonaischinois.StaticUtils;
-import com.daoliangshu.japonaischinois.VocabularyActivity;
+import com.daoliangshu.japonaischinois.core.MainActivity;
+import com.daoliangshu.japonaischinois.core.MyWebViewClient;
+import com.daoliangshu.japonaischinois.core.data.Settings;
+import com.daoliangshu.japonaischinois.core.data.StaticUtils;
 
 import java.io.UnsupportedEncodingException;
 
@@ -62,7 +63,7 @@ public class InfoSlidePageFragment extends Fragment {
         webView.addJavascriptInterface(new Object() {
             @android.webkit.JavascriptInterface
             public void performClick(String textToPonounce) {
-                ((VocabularyActivity) getActivity()).pronounceLetter(textToPonounce);
+                ((MainActivity) getActivity()).pronounceLetter(textToPonounce);
             }
         }, "pron");
 

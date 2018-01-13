@@ -1,5 +1,6 @@
-package com.daoliangshu.japonaischinois;
+package com.daoliangshu.japonaischinois.core;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.MediaPlayer;
@@ -13,6 +14,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -20,14 +23,19 @@ import android.view.WindowManager;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.daoliangshu.japonaischinois.core.DBHelper;
-import com.daoliangshu.japonaischinois.core.DataManager;
-import com.daoliangshu.japonaischinois.core.InfoSlidePageFragment;
-import com.daoliangshu.japonaischinois.core.MainSlidePageFragment;
-import com.daoliangshu.japonaischinois.core.SettingSlidePageFragment;
-import com.daoliangshu.japonaischinois.core.Settings;
-import com.daoliangshu.japonaischinois.core.StatisticalDatabase;
-import com.daoliangshu.japonaischinois.lettrabulle.manager.EntryManager;
+import com.daoliangshu.japonaischinois.R;
+import com.daoliangshu.japonaischinois.ZoomOutPageTransformer;
+import com.daoliangshu.japonaischinois.core.data.DataManager;
+import com.daoliangshu.japonaischinois.core.data.Settings;
+import com.daoliangshu.japonaischinois.core.data.SettingsActivity;
+import com.daoliangshu.japonaischinois.core.data.StaticUtils;
+import com.daoliangshu.japonaischinois.core.data.TTSManager;
+import com.daoliangshu.japonaischinois.core.db.DBHelper;
+import com.daoliangshu.japonaischinois.core.db.StatisticalDatabase;
+import com.daoliangshu.japonaischinois.core.fragments.InfoSlidePageFragment;
+import com.daoliangshu.japonaischinois.core.fragments.MainSlidePageFragment;
+import com.daoliangshu.japonaischinois.core.fragments.SettingSlidePageFragment;
+import com.daoliangshu.japonaischinois.core.fragments.VocListSlidePageFragment;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,7 +43,8 @@ import java.util.HashMap;
 import java.util.Locale;
 
 
-public class VocabularyActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
+
 
     private MediaPlayer mp = null;
     private MainSlidePageFragment flashCardFragment;
@@ -43,13 +52,30 @@ public class VocabularyActivity extends AppCompatActivity {
     private int currentLesson = 1;
     private EntryManager entryManager;
     private ViewFlipper flipper;
-    private static final int NUM_MAIN_PAGES = 3;
+    private static final int NUM_MAIN_PAGES = 2;
     private ViewPager mPagerMain;
 
     public static final int NUM_INFO_PAGES = 8;
     private ViewPager mPagerInfo;
     private TTSManager ttsManager;
     private  int stepBackTriggerCount = 0; // If two time click back => finish app
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     //private class
     private class SlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -74,15 +100,11 @@ public class VocabularyActivity extends AppCompatActivity {
                     return res;
                 case StaticUtils.PAGE_MAIN:
                     switch (position) {
-                        case 1:
+                        case 0:
                             MainSlidePageFragment mspg = new MainSlidePageFragment();
                             mFragmentList.put(1, mspg );
                             return mspg;
-                        case 0:
-                            SettingSlidePageFragment slpg = new SettingSlidePageFragment();
-                            mFragmentList.put(0, slpg);
-                            return slpg;
-                        case 2:
+                        case 1:
                             VocListSlidePageFragment vlspg = new VocListSlidePageFragment();
                             mFragmentList.put(2, vlspg);
                             return vlspg;
@@ -135,7 +157,7 @@ public class VocabularyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.setTheme(R.style.AppTheme);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -161,8 +183,8 @@ public class VocabularyActivity extends AppCompatActivity {
         try {
             DBHelper dbHelper = new DBHelper(getApplicationContext());
             StatisticalDatabase statisticalDatabase = new StatisticalDatabase(getApplicationContext());
-            Settings.entryManager = new EntryManager(dbHelper, statisticalDatabase);
-            entryManager = Settings.entryManager;
+            Settings.dbEntryManager = new EntryManager(dbHelper, statisticalDatabase);
+            entryManager = Settings.dbEntryManager;
 
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -253,11 +275,12 @@ public class VocabularyActivity extends AppCompatActivity {
         if (flashCardFragment != null) {
             flashCardFragment.pauseInterval();
         }
+
     }
     @Override
     public void onDestroy(){
         super.onDestroy();
-        Settings.entryManager.close();
+        Settings.dbEntryManager.close();
         ttsManager.close();
     }
     @Override
@@ -316,12 +339,12 @@ public class VocabularyActivity extends AppCompatActivity {
                 "/settings.conf");
     }
     public void nextWord() {
-        Settings.entryManager.next();
+        Settings.dbEntryManager.next();
         if (Settings.isAutoSpeak) speak();
         updateInterval();
     }
     public void previousWord() {
-        Settings.entryManager.previous();
+        Settings.dbEntryManager.previous();
         if (Settings.isAutoSpeak) speak();
         updateInterval();
     }
@@ -350,7 +373,7 @@ public class VocabularyActivity extends AppCompatActivity {
      * @return Value of the column
      */
     public String getCurrent(String dbColumn) {
-        HashMap<String, String> res = Settings.entryManager.getCurrentWord();
+        HashMap<String, String> res = Settings.dbEntryManager.getCurrentWord();
         if (res != null && res.containsKey(dbColumn)) {
             return res.get(dbColumn);
         }else{

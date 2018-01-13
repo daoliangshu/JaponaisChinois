@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.daoliangshu.japonaischinois.MyWebViewClient;
 import com.daoliangshu.japonaischinois.R;
-import com.daoliangshu.japonaischinois.StaticUtils;
-import com.daoliangshu.japonaischinois.VocabularyActivity;
-import com.daoliangshu.japonaischinois.core.Settings;
+import com.daoliangshu.japonaischinois.core.MainActivity;
+import com.daoliangshu.japonaischinois.core.MyWebViewClient;
+import com.daoliangshu.japonaischinois.core.data.Settings;
+import com.daoliangshu.japonaischinois.core.data.StaticUtils;
 
 /**
  * Created by daoliangshu on 2/3/17.
@@ -61,7 +61,7 @@ public class GrammarSlidePageFragment extends Fragment {
         webView.addJavascriptInterface(new Object() {
             @android.webkit.JavascriptInterface
             public void performClick(String textToPonounce) {
-                ((VocabularyActivity) getActivity()).pronounceLetter(textToPonounce);
+                ((MainActivity) getActivity()).pronounceLetter(textToPonounce);
             }
         }, "pron");
         webView.loadDataWithBaseURL(null, txt, "text/html", "utf-8", null);

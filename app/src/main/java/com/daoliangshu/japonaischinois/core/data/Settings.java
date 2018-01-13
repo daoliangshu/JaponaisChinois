@@ -1,6 +1,6 @@
-package com.daoliangshu.japonaischinois.core;
+package com.daoliangshu.japonaischinois.core.data;
 
-import com.daoliangshu.japonaischinois.lettrabulle.manager.EntryManager;
+import com.daoliangshu.japonaischinois.core.EntryManager;
 
 /**
  * Created by daoliangshu on 2/5/17.
@@ -12,7 +12,6 @@ public class Settings {
     public static final int ENTRY_BY_SUBSET = 20;
     public static final boolean REQUEST_UPDATE = true;
 
-    //Mode: define what is displayed ( WORD or SENTENCE)
     public static final int ENTRY_WORD_ONLY = 0;
     public static final int ENTRY_SEN_ONLY = 1;
     public static final int ENTRY_50_50 = 2;
@@ -48,5 +47,5 @@ public class Settings {
     //grammar number of pages per lessons
     public static int[] grNumPages= { 3, 3, 0, 0, 0, 0, 0, 2, 1, 1, 2, 1, 1, 0, 0, 0};
 
-    public static EntryManager entryManager;
+    public static EntryManager dbEntryManager;
 }

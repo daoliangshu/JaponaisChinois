@@ -1,7 +1,11 @@
-package com.daoliangshu.japonaischinois.core;
+package com.daoliangshu.japonaischinois.core.data;
+
 import android.content.res.AssetManager;
 import android.util.Log;
 import android.util.SparseArray;
+
+import com.daoliangshu.japonaischinois.core.db.DBHelper;
+import com.daoliangshu.japonaischinois.core.fragments.InfoSlidePageFragment;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -160,6 +164,14 @@ public class DataManager {
                 saveBundle.put("curInterval", String.format(Locale.ENGLISH, "%d", Settings.curInterval));
                 saveBundle.put("curEmptyRatio", String.format(Locale.ENGLISH,
                                                 "%f", Settings.curEmptyRatio));
+                saveBundle.put("curSrc1", DBHelper.source1);
+                saveBundle.put("curSrc2", DBHelper.source2);
+                saveBundle.put("curTarget", DBHelper.target);
+                saveBundle.put("curVocMode",
+                        String.format(Locale.ENGLISH, "%d", Settings.curVocChooserMode));
+                saveBundle.put("curThematic", String.format(Locale.ENGLISH,
+                        "%d", Settings.curCategory));
+
 
                 for (Map.Entry<String, String> entry : saveBundle.entrySet()) {
                     String line = entry.getKey() + " // " + entry.getValue();
@@ -201,6 +213,16 @@ public class DataManager {
             Settings.curInterval = Integer.valueOf(value);
         }else if (key.equals("curEmptyRatio")){
             Settings.curEmptyRatio = Float.valueOf(value);
+        }else if(key.equals("curThematic")){
+            Settings.curCategory = Integer.valueOf(value);
+        }else if(key.equals("curVocMode")){
+            Settings.curVocChooserMode = Integer.valueOf(value);
+        }else if(key.equals("curSrc1")){
+            DBHelper.source1 = value;
+        }else if(key.equals("curSrc2")){
+            DBHelper.source2 = value;
+        } else if(key.equals("curTarget")){
+            DBHelper.target = value;
         }
     }
 

@@ -9,7 +9,7 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import com.daoliangshu.japonaischinois.R;
-import com.daoliangshu.japonaischinois.core.Settings;
+import com.daoliangshu.japonaischinois.core.data.Settings;
 import com.daoliangshu.japonaischinois.lettrabulle.ProjectileState;
 import com.daoliangshu.japonaischinois.lettrabulle.manager.CollisionManager;
 import com.daoliangshu.japonaischinois.lettrabulle.manager.CollisionState;
@@ -412,7 +412,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
                     case BubbleLine.VANISH_OVER:
                         int colorIndex = mView.getRandColorIndex(mView.getTopLineIndex());
-                        bli.setWord(Settings.entryManager.getRandomWord(), colorIndex);
+                        bli.setWord(Settings.dbEntryManager.getRandomWord(), colorIndex);
                         mView.repositionNeededLineAtTopStack(bli.getLineIndex());
                         mView.recomputeTopDownOrderedLineState(true);
                         mView.setNewFiveLengthLetterSet();
@@ -426,7 +426,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                     mView.recomputeTopDownOrderedLineState(false);
                     wordLines.
                             get(value).
-                            setWord(Settings.entryManager.getRandomWord(),
+                            setWord(Settings.dbEntryManager.getRandomWord(),
                                     mView.getRandColorIndex(
                                             wordLines.
                                                     get(value).getColorIndex()));

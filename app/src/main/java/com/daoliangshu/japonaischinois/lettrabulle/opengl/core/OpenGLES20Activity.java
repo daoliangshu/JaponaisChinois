@@ -15,8 +15,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.daoliangshu.japonaischinois.R;
-import com.daoliangshu.japonaischinois.core.Settings;
-import com.daoliangshu.japonaischinois.lettrabulle.manager.EntryManager;
+import com.daoliangshu.japonaischinois.core.EntryManager;
+import com.daoliangshu.japonaischinois.core.data.Settings;
 import com.daoliangshu.japonaischinois.lettrabulle.manager.GameStatusSlideFragment;
 import com.daoliangshu.japonaischinois.lettrabulle.manager.ZoomOutPageTransformer;
 import com.daoliangshu.japonaischinois.lettrabulle.opengl.menu_components.GameSettingTopSlideFragment;
@@ -28,6 +28,7 @@ import static android.view.View.SYSTEM_UI_FLAG_IMMERSIVE;
 
 /**
  * Created by daoliangshu on 2017/7/5.
+ * Activity for the bubble game
  */
 public class OpenGLES20Activity extends AppCompatActivity {
 
@@ -89,7 +90,7 @@ public class OpenGLES20Activity extends AppCompatActivity {
         setContentView(R.layout.lettrabulle_gl);
         mHandler = new Handler();
         View v1 = findViewById(R.id.game_layout);
-        mEntryManager = Settings.entryManager;
+        mEntryManager = Settings.dbEntryManager;
         //Bundle extra = getIntent().getExtras();
 
         mGLView = (MyGLSurfaceView) findViewById(R.id.lettrabulle_view);

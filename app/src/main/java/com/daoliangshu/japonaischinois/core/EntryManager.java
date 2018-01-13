@@ -1,10 +1,10 @@
-package com.daoliangshu.japonaischinois.lettrabulle.manager;
+package com.daoliangshu.japonaischinois.core;
 
 import android.util.Log;
 
-import com.daoliangshu.japonaischinois.core.DBHelper;
-import com.daoliangshu.japonaischinois.core.Settings;
-import com.daoliangshu.japonaischinois.core.StatisticalDatabase;
+import com.daoliangshu.japonaischinois.core.data.Settings;
+import com.daoliangshu.japonaischinois.core.db.DBHelper;
+import com.daoliangshu.japonaischinois.core.db.StatisticalDatabase;
 import com.daoliangshu.japonaischinois.lettrabulle.minterfaces.EntryManagerInterface;
 import com.daoliangshu.japonaischinois.lettrabulle.opengl.util.Config;
 
@@ -89,9 +89,10 @@ public class EntryManager implements EntryManagerInterface {
         curParams[1] = thematicIndex;
         curParams[2] = level;
         ArrayList<Integer> idsList = dbHelper.getIdsByFilter(lessonIndex, thematicIndex, level);
+        if(idsList == null)return;
         curSetName = String.format(Locale.ENGLISH,
-                "le:%d|the:%d|lv:%d",
-                lessonIndex, thematicIndex, level);
+                "le:%d|the:%d|lv:%d|src1:%s|src2:%s|tg:%s",
+                lessonIndex, thematicIndex, level, DBHelper.source1, DBHelper.source2, DBHelper.target);
         if(statDb.getInfoRow(curSetName) != null){
             curSubsetIndex = statDb.getSubsetCount(curSetName) -1;
         }else{
@@ -127,12 +128,12 @@ public class EntryManager implements EntryManagerInterface {
         if(vocIndex < 0)return "Invalid";
         if(vocIndex >= mVocList.size())return "out of bound: getSourceFromId";
         switch(whichSource){
-            case 0:
-                return mVocList.get(vocIndex).get(DBHelper.source1);
             case 1:
                 return mVocList.get(vocIndex).get(DBHelper.source1);
+            case 2:
+                return mVocList.get(vocIndex).get(DBHelper.source2);
             default:
-                return "";
+                return "[Invalid Source]";
 
         }
     }
@@ -189,6 +190,7 @@ public class EntryManager implements EntryManagerInterface {
     public ArrayList<HashMap<String, String>> getVocList(){
         return mVocList;
     }
+    public int getVocCount(){ return mVocList != null?mVocList.size(): -1;}
     public String getRandomWord(){
         return getVocFormated(-1);
     }
@@ -198,4 +200,5 @@ public class EntryManager implements EntryManagerInterface {
     public HashMap<String, String> getCurrentWord(){
         return mVocList.get(mHistory[current]);
     }
+    public DBHelper getDB(){ return this.dbHelper; }
 }

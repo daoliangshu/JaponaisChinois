@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.daoliangshu.japonaischinois.core.Settings;
+import com.daoliangshu.japonaischinois.core.data.Settings;
 import com.daoliangshu.japonaischinois.lettrabulle.ProjectileState;
 import com.daoliangshu.japonaischinois.lettrabulle.opengl.objects.BubbleButton;
 import com.daoliangshu.japonaischinois.lettrabulle.opengl.objects.BubbleLine;
@@ -62,7 +62,7 @@ class MyGLSurfaceView extends GLSurfaceView {
         Config.height = h;
         mWidth = w;
         mHeight = h;
-        mRenderer.setLetters(Settings.entryManager.getVocList());
+        mRenderer.setLetters(Settings.dbEntryManager.getVocList());
         board_bottom_posy = (int) (mHeight * (1f - Config.BOARD_BOTTOM_GLVIEW_POSY) / 2f);
         letter_chooser_left_bound = mWidth - (int) (mWidth * Config.LETTER_CHOOSER_WIDTH_RATIOX);
 
@@ -147,7 +147,7 @@ class MyGLSurfaceView extends GLSurfaceView {
             for (int vocIndex = 0; vocIndex < numWordLine; vocIndex++) {
                 prevCellColorIndex = getRandColorIndex(prevCellColorIndex);
                 mRenderer.wordLines.add(new BubbleLine(vocIndex));
-                String randWord = Settings.entryManager.getRandomWord();
+                String randWord = Settings.dbEntryManager.getRandomWord();
                 mRenderer.wordLines.get(vocIndex).setWord(randWord, prevCellColorIndex); //here
                 if (vocIndex == 0)
                     ((BubbleLine) mRenderer.wordLines.get(vocIndex)).setPosF(1f + Config.bubbleDiameter / 2f);

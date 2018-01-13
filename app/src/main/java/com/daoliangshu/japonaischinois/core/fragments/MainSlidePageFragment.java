@@ -1,4 +1,4 @@
-package com.daoliangshu.japonaischinois.core;
+package com.daoliangshu.japonaischinois.core.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,8 +16,10 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.daoliangshu.japonaischinois.R;
-import com.daoliangshu.japonaischinois.StaticUtils;
-import com.daoliangshu.japonaischinois.VocabularyActivity;
+import com.daoliangshu.japonaischinois.core.MainActivity;
+import com.daoliangshu.japonaischinois.core.data.Settings;
+import com.daoliangshu.japonaischinois.core.data.StaticUtils;
+import com.daoliangshu.japonaischinois.core.db.DBHelper;
 import com.daoliangshu.japonaischinois.core.grammar.GrammarActivity;
 import com.daoliangshu.japonaischinois.lettrabulle.opengl.core.OpenGLES20Activity;
 import com.daoliangshu.japonaischinois.sentencereordering.SentenceReorderingActivity;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 
 public class MainSlidePageFragment extends Fragment {
 
-    private VocabularyActivity parentActivity;
+    private MainActivity parentActivity;
     private TextView mWordView;
     private TextView mWordView2;
     private TextView mTransView;
@@ -47,7 +49,7 @@ public class MainSlidePageFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_slide_flashcard, container, false);
-        parentActivity = (VocabularyActivity) getActivity();
+        parentActivity = (MainActivity) getActivity();
         mWordView = (TextView) rootView.findViewById(R.id.word_content);
         mWordView2 = (TextView) rootView.findViewById(R.id.word_content2);
         mWordView.setMovementMethod(new ScrollingMovementMethod());
@@ -112,17 +114,22 @@ public class MainSlidePageFragment extends Fragment {
         });
 
         Button goToGameButton = (Button) rootView.findViewById(R.id.button_back0);
+        if(Settings.dbEntryManager.getVocCount() <= 0){
+            //Disable button if no vocabulary
+            goToGameButton.setEnabled(false);
+        }
         goToGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer[] ex = ((VocabularyActivity)getActivity()).getCurVocListCodesAsArray();
-               Intent intent = new Intent(getContext(), OpenGLES20Activity.class);
-                ArrayList<Integer> exx =  new ArrayList<Integer>();
-                 for(int i=0; i< ex.length; i++){
-                    exx.add(ex[i]);
-                }
 
-                intent.putIntegerArrayListExtra("vocCodes",exx);
+                Integer[] vocIdsAsArray = ((MainActivity)getActivity()).
+                                getCurVocListCodesAsArray();
+               Intent intent = new Intent(getContext(), OpenGLES20Activity.class);
+                ArrayList<Integer> bundledVocIds =  new ArrayList<Integer>();
+                 for(int i=0; i< vocIdsAsArray.length; i++){
+                    bundledVocIds.add(vocIdsAsArray[i]);
+                }
+                intent.putIntegerArrayListExtra("vocCodes",bundledVocIds);
                 startActivity(intent);
 
             }
@@ -218,7 +225,6 @@ public class MainSlidePageFragment extends Fragment {
         (rootView.findViewById(R.id.prev_button)).setBackgroundResource(mode ? styles[0] : styles[1]);
         ((Button) rootView.findViewById(R.id.prev_button)).
                 setTextColor(ContextCompat.getColor(getContext(), mode ? colors[0] : colors[1]));
-        (rootView.findViewById(R.id.speak_button)).setBackgroundResource(mode ? styles[0] : styles[1]);
         ((Button) rootView.findViewById(R.id.speak_button)).
                 setTextColor(ContextCompat.getColor(getContext(), mode ? colors[0] : colors[1]));
         (rootView.findViewById(R.id.grammar_button)).setBackgroundResource(mode ? styles[0] : styles[1]);

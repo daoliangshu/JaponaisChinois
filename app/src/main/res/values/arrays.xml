@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="lesson_list">
+    <string-array name="pref_lesson_chooser_entries">
         <item>Leçon 0</item>
         <item>Leçon 1</item>
         <item>Leçon 2</item>
@@ -25,6 +25,31 @@
         <item>Leçon 21</item>
         <item>Leçon 22</item>
     </string-array>
+    <string-array name="pref_lesson_chooser_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+    </string-array>
 
     <string-array name="dst_word_mode">
         <item>Sans Kanji</item>
@@ -32,24 +57,32 @@
         <item>Mix</item>
     </string-array>
 
-    <string-array name="empty_word_ratio">
+    <string-array name="pref_bubble_guess_ratio_entries">
         <!-- ratio of the blank par letter in word in lettrabulle game -->
         <item>0.30f</item>
         <item>0.5f</item>
         <item>0.75f</item>
         <item>0.85f</item>
         <item>1.00f</item>
-
     </string-array>
 
 
-    <string-array name="switch_mode_list">
+    <string-array name="pref_interval_entries">
         <item>Manuel</item>
         <item>Toutes les 3 secondes</item>
         <item>Toutes les 5 secondes</item>
         <item>Toutes les 10 secondes</item>
         <item>Toutes les 15 secondes</item>
         <item>Toutes les 30 secondes</item>
+    </string-array>
+
+    <string-array name="pref_interval_values">
+        <item>0</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
     </string-array>
 
     <string-array name="entry_type_array">
@@ -74,15 +107,29 @@
         <item>Dump9</item>
     </string-array>
 
-    <string-array name="lesson_search_way">
-        <!-- List the way how to display lessons
-            Can display by choosing a category, or list alll lessons.
-            Used when selecting a lesson
-        -->
-        <item>Tout/所有</item>
+    <string-array name="pref_chooser_mode_entries">
         <item>Niveau/程度</item>
         <item>Catégorie/類別</item>
     </string-array>
+    <string-array name="pref_chooser_mode_values">
+        <item>lesson</item>
+        <item>category</item>
+    </string-array>
+
+    <string-array name="pref_category_chooser_entries">
+        <item>Economy</item>
+        <item>Animals</item>
+        <item>Society</item>
+    </string-array>
+
+    <string-array name="pref_category_chooser_values">
+        <item>economy</item>
+        <item>animals</item>
+        <item>society</item>
+    </string-array>
+
+
+
 
     <string-array name="lesson_menu_items_zh_fr">
         <item style="@style/menu_style_1">聽全部 écouter tout </item>

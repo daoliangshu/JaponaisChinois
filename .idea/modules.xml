@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JaponaisChinois.iml" filepath="$PROJECT_DIR$/JaponaisChinois.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/commons-lang3-3.6/commons-lang3-3.6.iml" filepath="$PROJECT_DIR$/commons-lang3-3.6/commons-lang3-3.6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/opencsv-4.0/opencsv-4.0.iml" filepath="$PROJECT_DIR$/opencsv-4.0/opencsv-4.0.iml" />
     </modules>
   </component>
 </project>

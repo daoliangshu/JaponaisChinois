@@ -1,8 +1,8 @@
-package com.daoliangshu.japonaischinois;
+package com.daoliangshu.japonaischinois.core;
 import android.content.Context;
 import android.webkit.WebViewClient;
 
-import com.daoliangshu.japonaischinois.core.DBHelper;
+import com.daoliangshu.japonaischinois.core.db.DBHelper;
 
 /**
  * Created by daoliangshu on 2/4/17.

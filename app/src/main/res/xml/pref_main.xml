@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:entryValues="@array/pref_chooser_mode_values"
+        android:entries="@array/pref_chooser_mode_entries"
+        android:key="@string/pref_chooser_mode_key"
+        android:title="@string/pref_chooser_mode_label"
+        android:defaultValue="@string/pref_chooser_mode_default"
+        android:summary="@string/pref_chooser_mode_default"
+        />
+
+    <ListPreference
+        android:entryValues="@array/pref_lesson_chooser_values"
+        android:entries="@array/pref_lesson_chooser_entries"
+        android:key="@string/pref_lesson_chooser_key"
+        android:title="@string/pref_lesson_chooser_label"
+        android:defaultValue="@string/pref_chooser_mode_default"
+        android:summary="@string/pref_lesson_chooser_default"/>
+
+    <ListPreference
+        android:entryValues="@array/pref_category_chooser_values"
+        android:entries="@array/pref_category_chooser_entries"
+        android:key="@string/pref_category_chooser_key"
+        android:title="@string/pref_category_chooser_label"
+        android:defaultValue="@string/pref_category_chooser_default"
+        android:summary="@string/pref_category_chooser_default"/>
+
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_hide_source1_default"
+        android:key="@string/pref_hide_source1_key"
+        android:summaryOff="@string/pref_hide_false"
+        android:summaryOn="@string/pref_hide_true"
+        android:title="@string/pref_hide_fr"
+        />
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_hide_source2_default"
+        android:key="@string/pref_hide_source2_key"
+        android:summaryOff="@string/pref_hide_false"
+        android:summaryOn="@string/pref_hide_true"
+        android:title="@string/pref_hide_zh"
+        />
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_hide_target_default"
+        android:key="@string/pref_hide_target_key"
+        android:summaryOff="@string/pref_hide_false"
+        android:summaryOn="@string/pref_hide_true"
+        android:title="@string/pref_hide_jp"
+        />
+</PreferenceScreen>

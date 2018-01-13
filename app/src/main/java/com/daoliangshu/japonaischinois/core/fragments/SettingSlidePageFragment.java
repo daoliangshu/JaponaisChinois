@@ -1,7 +1,9 @@
-package com.daoliangshu.japonaischinois.core;
+package com.daoliangshu.japonaischinois.core.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -20,23 +22,26 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.daoliangshu.japonaischinois.R;
-import com.daoliangshu.japonaischinois.StaticUtils;
-import com.daoliangshu.japonaischinois.VocabularyActivity;
+import com.daoliangshu.japonaischinois.core.MainActivity;
+import com.daoliangshu.japonaischinois.core.data.DataManager;
+import com.daoliangshu.japonaischinois.core.data.DownloadActivity;
+import com.daoliangshu.japonaischinois.core.data.Settings;
+import com.daoliangshu.japonaischinois.core.data.StaticUtils;
+import com.daoliangshu.japonaischinois.core.db.DBHelper;
 
 /**
  * Created by daoliangshu on 2/5/17.
  */
 public class SettingSlidePageFragment extends Fragment {
 
-    private VocabularyActivity parentActivity;
+    private MainActivity parentActivity;
     private Spinner lessonSpinner;
     private Spinner modeSpinner;
     private Spinner categorySpinner;
     private Spinner entryTypeSpinner;
     private Spinner emptyRatioSpinner;
-    private Spinner chooserModeSpinner;
+    private Spinner modeChooserSpinner;
     ViewGroup rView;
-    private static boolean vocIsLoaded = false;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -46,8 +51,7 @@ public class SettingSlidePageFragment extends Fragment {
                 R.layout.fragment_slide_settings, container, false);
         rView = rootView;
         //List view
-        parentActivity = (VocabularyActivity) getActivity();
-
+        parentActivity = (MainActivity) getActivity();
 
         //mode
         modeSpinner = (Spinner) rootView.findViewById(R.id.mode_list);
@@ -74,8 +78,8 @@ public class SettingSlidePageFragment extends Fragment {
                     LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     v = vi.inflate(R.layout.support_simple_spinner_dropdown_item, null);
                 }
-
                 TextView tv = (TextView) v.findViewById(android.R.id.text1);
+                tv.setMinHeight(75);
                 tv.setText(values2[position]);
                 tv.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                 tv.setBackgroundResource(R.drawable.button);
@@ -122,7 +126,6 @@ public class SettingSlidePageFragment extends Fragment {
             }
         });
 
-
         modeSpinner.setSelection(Settings.getCurIntervalPos());
         //display mode
         entryTypeSpinner = (Spinner) rootView.findViewById(R.id.display_mode_list);
@@ -152,6 +155,7 @@ public class SettingSlidePageFragment extends Fragment {
 
                 TextView tv = (TextView) v.findViewById(android.R.id.text1);
                 tv.setText(entryTypeValues[position]);
+                tv.setMinHeight(75);
                 tv.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                 tv.setBackgroundResource(R.drawable.button);
                 return v;
@@ -172,7 +176,13 @@ public class SettingSlidePageFragment extends Fragment {
             }
         });
 
-
+        Button mUpdateDBButton = (Button)rootView.findViewById(R.id.btn_update_db);
+        mUpdateDBButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateDatabase(v);
+            }
+        });
 
         //display mode
         emptyRatioSpinner = (Spinner) rootView.findViewById(R.id.empty_ratio);
@@ -201,6 +211,7 @@ public class SettingSlidePageFragment extends Fragment {
                 }
 
                 TextView tv = (TextView) v.findViewById(android.R.id.text1);
+                tv.setMinHeight(75);
                 tv.setText(emptyRatioValues[position]);
                 tv.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                 tv.setBackgroundResource(R.drawable.button);
@@ -286,6 +297,16 @@ public class SettingSlidePageFragment extends Fragment {
             public void onClick(View v) {
                 DataManager.saveSettings(getActivity().getFilesDir().getAbsolutePath() +
                         "/settings.conf");
+                Dialog dialog = new Dialog(getContext());
+                dialog.setCancelable(true);
+                dialog.getWindow().getDecorView().setBackgroundResource(0);
+                View dialogView = View.inflate(getContext(), R.layout.simple_dialog_layout, null);
+
+
+                ((TextView)dialogView.findViewById(R.id.content)).
+                        setText(getResources().getString(R.string.save_dialog_content));
+                dialog.setContentView(dialogView);
+                dialog.show();
             }
         });
 
@@ -294,10 +315,8 @@ public class SettingSlidePageFragment extends Fragment {
 
 
         updateNightDayMode();
-        if(!vocIsLoaded){
-            chooserModeSpinner.setSelection(0);
-            lessonSpinner.setSelection(0);
-        }
+        modeChooserSpinner.setSelection(Settings.curVocChooserMode);
+        lessonSpinner.setSelection(Settings.curLesson);
         return rootView;
     }
 
@@ -337,11 +356,7 @@ public class SettingSlidePageFragment extends Fragment {
 
         int styles[] = {R.drawable.button, R.drawable.button2};
         int colors[] = {R.color.colorBlueLight, R.color.dark_dark_blue};
-        (rView.findViewById(R.id.save_config_button)).
-                setBackgroundResource(Settings.isNightMode ? styles[0] : styles[1]);
-        ((Button) rView.findViewById(R.id.save_config_button)).
-                setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(),
-                        Settings.isNightMode ? colors[0] : colors[1]));
+
 
     }
 
@@ -398,6 +413,7 @@ public class SettingSlidePageFragment extends Fragment {
 
                 TextView tv = (TextView) v.findViewById(android.R.id.text1);
                 tv.setText(choices[position]);
+                tv.setMinHeight(75);
                 tv.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                 tv.setBackgroundResource(R.drawable.button);
                 return v;
@@ -455,7 +471,7 @@ public class SettingSlidePageFragment extends Fragment {
                             prevTargetLang = position;
                             break;
                     }
-                    if(needListUpdate)Settings.entryManager.updateList();
+                    if(needListUpdate)Settings.dbEntryManager.updateList();
 
 
 
@@ -472,7 +488,7 @@ public class SettingSlidePageFragment extends Fragment {
         }
     }
     public void initChooserModeSettings(ViewGroup rootView){
-        chooserModeSpinner = (Spinner) rootView.findViewById(R.id.spinner_mode_choose);
+        modeChooserSpinner = (Spinner) rootView.findViewById(R.id.spinner_mode_choose);
         final ViewFlipper modeFlipper = (ViewFlipper)rootView.findViewById(R.id.flipper_voc_chooser_mode);
         modeFlipper.setDisplayedChild(Settings.curVocChooserMode);
 
@@ -501,13 +517,14 @@ public class SettingSlidePageFragment extends Fragment {
                 }
                 TextView tv = (TextView) v.findViewById(android.R.id.text1);
                 tv.setText(choices[position]);
+                tv.setMinHeight(75);
                 tv.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                 tv.setBackgroundResource(R.drawable.button);
                 return v;
             }
         };
-        chooserModeSpinner.setAdapter(customAdapter);
-        chooserModeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        modeChooserSpinner.setAdapter(customAdapter);
+        modeChooserSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Settings.curVocChooserMode = position;
@@ -525,7 +542,7 @@ public class SettingSlidePageFragment extends Fragment {
     private void initLessons(ViewGroup rootView){
         lessonSpinner = (Spinner) rootView.findViewById(R.id.lesson_list);
         //Array to show in lessonSpinner:
-        final String[] values = getResources().getStringArray(R.array.lesson_list);
+        final String[] values = getResources().getStringArray(R.array.pref_lesson_chooser_entries);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_dropdown_item_1line,
                 android.R.id.text1, values) {
@@ -549,6 +566,7 @@ public class SettingSlidePageFragment extends Fragment {
                 }
 
                 TextView tv = (TextView) v.findViewById(android.R.id.text1);
+                tv.setMinHeight(75);
                 tv.setText(values[position]);
                 tv.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                 tv.setBackgroundResource(R.drawable.button);
@@ -606,6 +624,7 @@ public class SettingSlidePageFragment extends Fragment {
 
                 TextView tv = (TextView) v.findViewById(android.R.id.text1);
                 tv.setText(values[position]);
+                tv.setMinHeight(75);
                 tv.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                 tv.setBackgroundResource(R.drawable.button);
                 return v;
@@ -636,6 +655,10 @@ public class SettingSlidePageFragment extends Fragment {
         categorySpinner.setSelection(Settings.curCategory);
     }
 
+    public void updateDatabase(View v){
+        Intent downloadActivity = new Intent(getContext(), DownloadActivity.class);
+        startActivity(downloadActivity);
 
+    }
 
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="pref_hide_source1_default">false</bool>
+    <bool name="pref_hide_source2_default">false</bool>
+    <bool name="pref_hide_target_default">false</bool>
+</resources>

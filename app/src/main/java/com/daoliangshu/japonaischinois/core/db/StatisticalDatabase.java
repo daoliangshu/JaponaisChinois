@@ -1,4 +1,4 @@
-package com.daoliangshu.japonaischinois.core;
+package com.daoliangshu.japonaischinois.core.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.daoliangshu.japonaischinois.core.data.Settings;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -19,6 +20,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
 
+/**
+ * This class has several purpose:
+ * 1)Take care of creating vocabulary sets according to language settings
+ * 2)Store statistics on the use of these sets
+ */
 public class StatisticalDatabase extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "statistic_db";
@@ -51,6 +57,7 @@ public class StatisticalDatabase extends SQLiteOpenHelper {
         super(context, DB_NAME, null, 3);
         dbPath = context.getFilesDir().getPath();
         openDB();
+        /*
         Cursor c = mDb.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
 
         if (c.moveToFirst()) {
@@ -60,6 +67,7 @@ public class StatisticalDatabase extends SQLiteOpenHelper {
             }
         }
         c.close();
+        */
     }
 
     /*---------------------------------------------*/
@@ -164,8 +172,8 @@ public class StatisticalDatabase extends SQLiteOpenHelper {
         }else{
             res = setValues;
         }
-
-        if(res.size() == 0)return false;
+    //TODO (1) Create Subset Manager
+        if(res == null || res.size() == 0)return false;
         int subsetIndex = getSubsetCount(setName);
         String setIds = getIdsNFromList(res, elementCount);
         ContentValues contentValues = new ContentValues();
@@ -342,4 +350,9 @@ public class StatisticalDatabase extends SQLiteOpenHelper {
         return entry;
     }
 
+    public void close(){
+        if(mDb != null && mDb.isOpen()){
+            mDb.close();
+        }
+    }
 }

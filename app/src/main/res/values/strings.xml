@@ -42,6 +42,10 @@
     <string name="set_lettrabulle_speed">單子練習速度 / Lettrabulle Vitesse</string>
     <string name="about">關於 / A propos</string>
     <string name="settings_save">存檔 / Sauvegarder</string>
+    <string name="logo">Logo</string>
+
+    <!-- dialog contents -->
+    <string name="save_dialog_content">You configuration has been saved successfully!</string>
 
     <!-- Game strings -->
     <string name="retry">Recommencer</string>
@@ -109,4 +113,44 @@
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
 
+
+    <!-- Strings download, update dialog -->
+    <string name="update_dictionary">Dictionary Update</string>
+    <string name="update_failed">Update Failed</string>
+    <string name="update_succeed">Update Completed</string>
+    <string name="download_failed">Download Failed</string>
+    <string name="download_succeed">Download Succeed</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="processing">Processing</string>
+
+
+
+    <!-- Preferences -->
+    <string name="pref_hide_source1_key">hideSource1</string>
+    <string name="pref_hide_source2_key">hideSource2</string>
+
+    <string name="pref_hide_target_key">hideTarget</string>
+
+    <string name="pref_hide_false">Is Shown</string>
+    <string name="pref_hide_true">Is Hidden</string>
+
+    <string name="pref_hide_fr">Hide French</string>
+    <string name="pref_hide_en">Hide English</string>
+    <string name="pref_hide_zh">Hide Trad. Chinese</string>
+    <string name="pref_hide_jp">Hide Japanese</string>
+    <string name="action_settings">Action Settings</string>
+
+    <string name="pref_chooser_mode_key">Chooser Mode</string>
+    <string name="pref_chooser_mode_label">Vocabulary Chooser Mode</string>
+    <string name="pref_chooser_mode_default">lesson</string>
+
+    <string name="pref_lesson_chooser_key">lesson</string>
+    <string name="pref_lesson_chooser_default">1</string>
+    <string name="pref_lesson_chooser_label">Choose a lesson</string>
+
+    <string name="pref_category_chooser_label">Choose a category</string>
+    <string name="pref_category_chooser_default">animals</string>
+    <string name="pref_category_chooser_key">category</string>
 </resources>

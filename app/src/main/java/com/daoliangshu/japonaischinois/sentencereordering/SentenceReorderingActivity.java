@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.daoliangshu.japonaischinois.R;
 import com.daoliangshu.japonaischinois.ZoomOutPageTransformer;
-import com.daoliangshu.japonaischinois.core.DBHelper;
+import com.daoliangshu.japonaischinois.core.db.DBHelper;
 import com.daoliangshu.japonaischinois.lettrabulle.manager.GameSettingsSlideFragment;
 import com.daoliangshu.japonaischinois.lettrabulle.manager.GameStatusSlideFragment;
 

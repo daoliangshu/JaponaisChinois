@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.daoliangshu.japonaischinois.core.DBHelper;
+import com.daoliangshu.japonaischinois.core.db.DBHelper;
 import com.daoliangshu.japonaischinois.sentencereordering.manager.DrawableManager;
 
 import java.sql.SQLException;

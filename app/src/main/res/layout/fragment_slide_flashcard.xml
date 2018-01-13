@@ -114,11 +114,9 @@
                         android:id="@+id/speak_button"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/button2"
+                        android:background="@android:drawable/ic_btn_speak_now"
                         android:gravity="center"
                         android:keepScreenOn="true"
-                        android:text="@string/speak"
-                        android:textAllCaps="false"
                         android:textColor="@color/dark_dark_blue" />
 
                     <Button

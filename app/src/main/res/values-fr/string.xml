@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Strings download, update dialog -->
+    <string name="update_dictionary">Mise à Jour du Dictionnaire</string>
+    <string name="update_failed">Echec de la Mise à Jour</string>
+    <string name="update_succeed">Mise à Jour Réussi</string>
+    <string name="download_failed">Echec du Téléchargement</string>
+    <string name="download_succeed">Téléchargement Réussi</string>
+</resources>

@@ -1,104 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:orientation="vertical">
-
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:background="@drawable/border"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="@drawable/button_floral_blue"
-        android:padding="4dp">
-
-        <!-- Display Title -->
-        <LinearLayout
-            android:id="@+id/act_choose_top_layout"
-            android:layout_width="match_parent"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="0.25"
-            android:weightSum="1.0">
-
-            <TextView
-                android:id="@+id/tvTitleFr"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textStyle="bold|italic"
-                android:background="@drawable/border"
-                android:layout_weight="1.0"
-                android:textSize="22sp"
-                android:textColor="@color/lightYellow" />
-        </LinearLayout>
-        <!-- Display title Zh -->
-        <LinearLayout
-            android:id="@+id/act_choose_top_layout2"
-            android:layout_width="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="0.25"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1.0">
-
-            <TextView
-                android:id="@+id/tvTitleZh"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1.0"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textColor="@color/lightGreen" />
-        </LinearLayout>
-
-        <LinearLayout
-
-            android:id="@+id/act_choose_top_layout3"
-            android:layout_width="match_parent"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:id="@+id/tvWaveCount"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_gravity="left"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="3dp"
-                android:layout_weight="0.2"
-                android:textSize="18sp"
-                android:textColor="@color/lightGrey" />
-
-            <TextView
-                android:id="@+id/tvThematic"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.5"
-                android:textColor="@color/lightBlue"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvLevel"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="0.3"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:textColor="@color/lightRed" />
-        </LinearLayout>
+        android:layout_width="20dp"
+        android:layout_marginEnd="7dp"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:id="@+id/cb_select_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
-
-</merge>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:minHeight="40dp"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/tv_content_0_0"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            />
+        <TextView
+            android:id="@+id/tv_content_0_1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/tv_content_1_0"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            />
+        <TextView
+            android:id="@+id/tv_content_1_1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            />
+    </LinearLayout>
+    </LinearLayout>

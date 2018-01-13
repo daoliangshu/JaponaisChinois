@@ -1,28 +1,30 @@
-package com.daoliangshu.japonaischinois;
+package com.daoliangshu.japonaischinois.core.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.daoliangshu.japonaischinois.core.DBHelper;
-import com.daoliangshu.japonaischinois.core.Settings;
+import com.daoliangshu.japonaischinois.R;
+import com.daoliangshu.japonaischinois.core.MainActivity;
+import com.daoliangshu.japonaischinois.core.db.DBHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by daoliangshu on 4/9/17.
+ * Fragment View listing the vocabulary available for the given lesson or category
  */
 
 
@@ -31,9 +33,8 @@ public class VocListSlidePageFragment extends Fragment {
     private int position;
     private ArrayList<VocUnit> countryList = null;
     private ViewGroup rootView;
-    private boolean isNightMode = Settings.isNightMode;
-    VocUnitListAdapter dataAdapter = null;
-    ListView listView;
+    RecyclerView mVocList_RecyclerView;
+    private VocabularyDisplayAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +45,6 @@ public class VocListSlidePageFragment extends Fragment {
 
         Button btnSelectAll = (Button)rootView.findViewById(R.id.select_all);
         Button btnSelectNone = (Button)rootView.findViewById(R.id.select_none);
-
         btnSelectAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,8 +58,7 @@ public class VocListSlidePageFragment extends Fragment {
                 unselectAll();
             }
         });
-
-        displayListView();
+        displayListView(rootView);
 
         return rootView;
     }
@@ -86,39 +85,47 @@ public class VocListSlidePageFragment extends Fragment {
 
 
     public void selectAll(){
+        //TODO rewrite this method for the recyclingView
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                /*
                 for(int i=0; i< listView.getAdapter().getCount(); i++){
                     ((VocUnit)listView.getAdapter().getItem(i)).setSelected(true);
-
                 }
                 for(int i=0; i< listView.getChildCount(); i++){
                     ((CheckBox)listView.getChildAt(i).findViewById(R.id.checkBox1)).setChecked(true);
-                }
+                }*/
             }
         });
 
     }
 
     public void unselectAll(){
+        //TODO rewrite this method for the recyclingView
         getActivity().runOnUiThread(new Runnable() {
         @Override
         public void run() {
+            /*
             for(int i=0; i< listView.getAdapter().getCount(); i++){
                 ((VocUnit)listView.getAdapter().getItem(i)).setSelected(false);
 
             }
             for(int i=0; i< listView.getChildCount(); i++){
                 ((CheckBox)listView.getChildAt(i).findViewById(R.id.checkBox1)).setChecked(false);
-            }
+            }*/
         }
     });
     }
 
-    private void displayListView() {
+    private void displayListView(final ViewGroup container) {
+
+        mVocList_RecyclerView = (RecyclerView)container.findViewById(R.id.rv_vocabulary_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(container.getContext());
+        mVocList_RecyclerView.setLayoutManager(layoutManager);
+        mVocList_RecyclerView.setHasFixedSize(true);
         countryList = new ArrayList<>();
-        ArrayList<HashMap<String, String>> res = ((VocabularyActivity)getActivity()).getCurrentVocList();
+        ArrayList<HashMap<String, String>> res = ((MainActivity)getActivity()).getCurrentVocList();
         if(res == null)return;
         Log.d("VOCLIST", "Countr:  " + res.size());
         for(HashMap<String, String> mMap: res){
@@ -131,9 +138,15 @@ public class VocListSlidePageFragment extends Fragment {
                                                 true);
             countryList.add(vUnit);
         }
+        mAdapter = new VocabularyDisplayAdapter(countryList, new VocabularyDisplayAdapter.ListItemClickListener() {
+            @Override
+            public void onListItemClick(int clickedItemIndex) {
+                Log.d("TAG", "itemIndex: " + clickedItemIndex);
+            }
+        });
+        mVocList_RecyclerView.setAdapter(mAdapter);
 
-
-        //create an ArrayAdaptar from the String Array
+        /*
         dataAdapter = new VocUnitListAdapter(getActivity().getApplicationContext(),
                 R.layout.voc_info, countryList);
         listView = (ListView) rootView.findViewById(R.id.listView1);
@@ -148,7 +161,7 @@ public class VocListSlidePageFragment extends Fragment {
                 // When clicked, show a toast with the TextView text
                 VocUnit country = (VocUnit) parent.getItemAtPosition(position);
             }
-        });
+        });*/
 
     }
     

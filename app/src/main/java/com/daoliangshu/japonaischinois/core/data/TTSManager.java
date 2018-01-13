@@ -1,4 +1,4 @@
-package com.daoliangshu.japonaischinois;
+package com.daoliangshu.japonaischinois.core.data;
 
 /**
  * Created by daoliangshu on 2/13/17.

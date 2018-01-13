@@ -14,11 +14,11 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.daoliangshu.japonaischinois.R;
-import com.daoliangshu.japonaischinois.StaticUtils;
-import com.daoliangshu.japonaischinois.TTSManager;
-import com.daoliangshu.japonaischinois.core.DBHelper;
-import com.daoliangshu.japonaischinois.core.DataManager;
-import com.daoliangshu.japonaischinois.core.Settings;
+import com.daoliangshu.japonaischinois.core.data.DataManager;
+import com.daoliangshu.japonaischinois.core.data.Settings;
+import com.daoliangshu.japonaischinois.core.data.StaticUtils;
+import com.daoliangshu.japonaischinois.core.data.TTSManager;
+import com.daoliangshu.japonaischinois.core.db.DBHelper;
 
 import java.util.Locale;
 

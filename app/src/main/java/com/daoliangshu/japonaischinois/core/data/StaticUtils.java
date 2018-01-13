@@ -1,11 +1,9 @@
-package com.daoliangshu.japonaischinois;
+package com.daoliangshu.japonaischinois.core.data;
+
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-
-import com.daoliangshu.japonaischinois.core.DataManager;
-import com.daoliangshu.japonaischinois.core.Settings;
 
 import java.io.BufferedReader;
 import java.io.File;

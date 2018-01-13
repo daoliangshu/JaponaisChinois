@@ -3,7 +3,7 @@ package com.daoliangshu.japonaischinois.lettrabulle.opengl.objects;
 import android.graphics.RectF;
 import android.util.Log;
 
-import com.daoliangshu.japonaischinois.core.Settings;
+import com.daoliangshu.japonaischinois.core.data.Settings;
 import com.daoliangshu.japonaischinois.lettrabulle.opengl.programs.TextureShaderProgram;
 import com.daoliangshu.japonaischinois.lettrabulle.opengl.util.Config;
 import com.daoliangshu.japonaischinois.lettrabulle.opengl.util.LetterManager;

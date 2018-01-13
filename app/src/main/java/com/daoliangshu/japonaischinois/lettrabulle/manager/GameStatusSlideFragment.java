@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.daoliangshu.japonaischinois.R;
-import com.daoliangshu.japonaischinois.core.DBHelper;
+import com.daoliangshu.japonaischinois.core.db.DBHelper;
 import com.daoliangshu.japonaischinois.lettrabulle.opengl.util.Config;
 
 import java.util.Locale;
@@ -93,7 +93,7 @@ public class GameStatusSlideFragment extends Fragment {
             }
         };
         timer.schedule(timerTaskObj, 0, 1500);
-        toggleDstMode();
+        //toggleDstMode();
         return rootView;
     }
 

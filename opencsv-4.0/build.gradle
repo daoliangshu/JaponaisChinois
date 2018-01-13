@@ -1,0 +1,4 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('opencsv-4.0.jar'))
+dependencies {
+}

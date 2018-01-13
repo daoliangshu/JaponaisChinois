@@ -1,4 +1,4 @@
-package com.daoliangshu.japonaischinois.core;
+package com.daoliangshu.japonaischinois.core.data;
 
 import java.util.Comparator;
 
