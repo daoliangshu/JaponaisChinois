@@ -125,7 +125,10 @@
     <string name="update">Update</string>
     <string name="processing">Processing</string>
 
-
+    
+    <string name="desc_target_hide">Hide target word</string>
+    <string name="desc_source1_hide">Hide source1 word</string>
+    <string name="desc_source2_hide">Hide source2 word</string>
 
     <!-- Preferences -->
     <string name="pref_hide_source1_key">hideSource1</string>
@@ -153,4 +156,9 @@
     <string name="pref_category_chooser_label">Choose a category</string>
     <string name="pref_category_chooser_default">animals</string>
     <string name="pref_category_chooser_key">category</string>
+
+    <string name="pref_interval_key">interval</string>
+    <string name="pref_interval_label">Choose the Interval</string>
+    <string name="pref_interval_default">30</string>
+
 </resources>

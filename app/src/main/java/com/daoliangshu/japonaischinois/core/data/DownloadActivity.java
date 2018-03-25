@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.daoliangshu.japonaischinois.R;
 import com.daoliangshu.japonaischinois.core.db.DBHelper;
+import com.daoliangshu.japonaischinois.core.db.DatabaseContract;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedInputStream;
@@ -170,7 +171,7 @@ public class DownloadActivity extends Activity {
             while((nextLine = reader.readNext()) != null){
                 rowNumber++;
                 mLoadingProgressBar.setProgress(rowNumber/rowCount);
-                mDb.updateRow(nextLine, DBHelper.TB_BASIC);
+                mDb.updateRow(nextLine, DatabaseContract.DICO_TABLE.TABLE_NAME_DICO);
                 /*for(int i =0; i< nextLine.length; i++){
                     Log.i("CSV", "Cell column index: " + i);
                     Log.i("CSV","Cell Value: " + nextLine[i]);

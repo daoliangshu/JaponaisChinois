@@ -34,7 +34,6 @@ import com.daoliangshu.japonaischinois.core.db.DBHelper;
 import com.daoliangshu.japonaischinois.core.db.StatisticalDatabase;
 import com.daoliangshu.japonaischinois.core.fragments.InfoSlidePageFragment;
 import com.daoliangshu.japonaischinois.core.fragments.MainSlidePageFragment;
-import com.daoliangshu.japonaischinois.core.fragments.SettingSlidePageFragment;
 import com.daoliangshu.japonaischinois.core.fragments.VocListSlidePageFragment;
 
 import java.sql.SQLException;
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
     private MediaPlayer mp = null;
     private MainSlidePageFragment flashCardFragment;
-    private SettingSlidePageFragment settingsFragment;
     private int currentLesson = 1;
     private EntryManager entryManager;
     private ViewFlipper flipper;
@@ -108,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
                             VocListSlidePageFragment vlspg = new VocListSlidePageFragment();
                             mFragmentList.put(2, vlspg);
                             return vlspg;
-                        default:
-                            return new SettingSlidePageFragment();
                     }
                 default:
                     return new VocListSlidePageFragment();
@@ -165,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
         forceLocale();
         setContentView(R.layout.activity_vocabulary);
+        Settings.loadSettings(getApplicationContext());
         ttsManager = new TTSManager();
         ttsManager.init(this);
         if (!PreferenceManager.getDefaultSharedPreferences(
@@ -185,13 +182,14 @@ public class MainActivity extends AppCompatActivity {
             StatisticalDatabase statisticalDatabase = new StatisticalDatabase(getApplicationContext());
             Settings.dbEntryManager = new EntryManager(dbHelper, statisticalDatabase);
             entryManager = Settings.dbEntryManager;
-
+            if(Settings.curVocChooserMode == 0){
+                entryManager.setVocList(Settings.curLesson,-1, -1);
+            }else if(Settings.curVocChooserMode == 1){
+                entryManager.setVocList(-1,Settings.curCategory, -1);
+            }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
-        //Load Settings
-        DataManager.loadSettings(getFilesDir().getAbsolutePath() +
-                "/settings.conf");
 
         mp = new MediaPlayer();
 
@@ -334,10 +332,7 @@ public class MainActivity extends AppCompatActivity {
             flashCardFragment.updateInterval();
         }
     }
-    public void saveSettings() {
-        DataManager.saveSettings(getFilesDir().getAbsolutePath() +
-                "/settings.conf");
-    }
+
     public void nextWord() {
         Settings.dbEntryManager.next();
         if (Settings.isAutoSpeak) speak();
@@ -354,12 +349,9 @@ public class MainActivity extends AppCompatActivity {
     public void setFlashCardFragment(MainSlidePageFragment fragment) {
         flashCardFragment = fragment;
     }
-    public void setSettingsFragment(SettingSlidePageFragment fragment) {
-        settingsFragment = fragment;
 
-    }
     public void setVocList(int lessonIndex, int thematicIndex, int level) {
-        entryManager.setVocList(lessonIndex, thematicIndex, level);
+        entryManager.setVocList(2, thematicIndex, level);
         currentLesson = lessonIndex;
     }
     /*-------------------------------------------------*/
@@ -386,4 +378,5 @@ public class MainActivity extends AppCompatActivity {
     public Integer[] getCurVocListCodesAsArray(){
         return ((SlidePagerAdapter)mPagerMain.getAdapter()).getCurVocListCodesAsArray();
     }
+
 }

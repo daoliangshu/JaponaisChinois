@@ -22,6 +22,8 @@ import com.daoliangshu.japonaischinois.core.db.DBHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.daoliangshu.japonaischinois.core.db.DatabaseContract.DICO_TABLE.COL_ID;
+
 /**
  * Created by daoliangshu on 4/9/17.
  * Fragment View listing the vocabulary available for the given lesson or category
@@ -31,7 +33,7 @@ import java.util.HashMap;
 public class VocListSlidePageFragment extends Fragment {
     private String txt;
     private int position;
-    private ArrayList<VocUnit> countryList = null;
+    private ArrayList<VocUnit> vocabularyList = null;
     private ViewGroup rootView;
     RecyclerView mVocList_RecyclerView;
     private VocabularyDisplayAdapter mAdapter;
@@ -66,7 +68,7 @@ public class VocListSlidePageFragment extends Fragment {
 
     public Integer[] getSelectedVocsCodeAsArray(){
         ArrayList<Integer> res = new ArrayList<>();
-        for(VocUnit vu: countryList){
+        for(VocUnit vu: vocabularyList){
             if(vu.isSelected()){
                 res.add(vu.getCode());
             }
@@ -124,7 +126,7 @@ public class VocListSlidePageFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(container.getContext());
         mVocList_RecyclerView.setLayoutManager(layoutManager);
         mVocList_RecyclerView.setHasFixedSize(true);
-        countryList = new ArrayList<>();
+        vocabularyList = new ArrayList<>();
         ArrayList<HashMap<String, String>> res = ((MainActivity)getActivity()).getCurrentVocList();
         if(res == null)return;
         Log.d("VOCLIST", "Countr:  " + res.size());
@@ -134,11 +136,11 @@ public class VocListSlidePageFragment extends Fragment {
             String src2 = mMap.containsKey(DBHelper.source2)?mMap.get(DBHelper.source2):"";
             String target = mMap.containsKey(DBHelper.target)?mMap.get(DBHelper.target):"";
             VocUnit vUnit = new VocUnit( src1, src2, target,
-                                                Integer.valueOf(mMap.get(DBHelper.COL_ID)),
+                                                Integer.valueOf(mMap.get(COL_ID)),
                                                 true);
-            countryList.add(vUnit);
+            vocabularyList.add(vUnit);
         }
-        mAdapter = new VocabularyDisplayAdapter(countryList, new VocabularyDisplayAdapter.ListItemClickListener() {
+        mAdapter = new VocabularyDisplayAdapter(vocabularyList, new VocabularyDisplayAdapter.ListItemClickListener() {
             @Override
             public void onListItemClick(int clickedItemIndex) {
                 Log.d("TAG", "itemIndex: " + clickedItemIndex);
@@ -148,7 +150,7 @@ public class VocListSlidePageFragment extends Fragment {
 
         /*
         dataAdapter = new VocUnitListAdapter(getActivity().getApplicationContext(),
-                R.layout.voc_info, countryList);
+                R.layout.voc_info, vocabularyList);
         listView = (ListView) rootView.findViewById(R.id.listView1);
         if(listView.getChildCount() > 0)listView.removeAllViews();
         // Assign adapter to ListView

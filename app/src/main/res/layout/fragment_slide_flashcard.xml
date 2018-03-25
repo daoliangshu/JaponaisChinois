@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -47,6 +47,7 @@
 
 
             <ImageView
+                android:contentDescription="@string/desc_source1_hide"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center"
@@ -152,6 +153,7 @@
                     android:textSize="13sp" />
 
                 <ImageView
+                    android:contentDescription="@string/desc_source2_hide"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_gravity="center"
@@ -179,6 +181,7 @@
                 android:textSize="50sp" />
 
             <ImageView
+                android:contentDescription="@string/desc_target_hide"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center"
@@ -201,7 +204,7 @@
         </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>
 
 
 

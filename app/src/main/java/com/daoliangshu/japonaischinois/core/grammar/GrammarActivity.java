@@ -14,7 +14,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.daoliangshu.japonaischinois.R;
-import com.daoliangshu.japonaischinois.core.data.DataManager;
 import com.daoliangshu.japonaischinois.core.data.Settings;
 import com.daoliangshu.japonaischinois.core.data.StaticUtils;
 import com.daoliangshu.japonaischinois.core.data.TTSManager;
@@ -111,8 +110,8 @@ public class GrammarActivity extends AppCompatActivity {
     }
 
     public void saveSettings() {
-        DataManager.saveSettings(getFilesDir().getAbsolutePath() +
-                "/settings.conf");
+        //DataManager.saveSettings(getFilesDir().getAbsolutePath() +
+        //        "/settings.conf");
     }
 
 

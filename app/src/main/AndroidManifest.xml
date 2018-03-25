@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".sentencereordering.SentenceReorderingActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity android:name=".core.data.DownloadActivity" />
     </application>
 

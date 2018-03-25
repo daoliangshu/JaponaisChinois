@@ -50,4 +50,13 @@
         android:summaryOn="@string/pref_hide_true"
         android:title="@string/pref_hide_jp"
         />
+
+    <ListPreference
+        android:entryValues="@array/pref_interval_values"
+        android:entries="@array/pref_interval_entries"
+        android:key="@string/pref_interval_key"
+        android:title="@string/pref_interval_label"
+        android:defaultValue="@string/pref_interval_default"
+        android:summary="@string/pref_interval_default"
+        />
 </PreferenceScreen>

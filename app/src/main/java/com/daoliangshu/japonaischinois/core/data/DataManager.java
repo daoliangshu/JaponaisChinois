@@ -4,22 +4,13 @@ import android.content.res.AssetManager;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.daoliangshu.japonaischinois.core.db.DBHelper;
 import com.daoliangshu.japonaischinois.core.fragments.InfoSlidePageFragment;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * Created by daoliangshu on 2/7/17.
@@ -118,111 +109,6 @@ public class DataManager {
         int read;
         while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);
-        }
-    }
-
-    public static boolean loadSettings(String path) {
-        File settingFile = new File(path);
-        if (settingFile.exists()) {
-            try {
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(
-                                new FileInputStream(settingFile)));
-                String line;
-                while ((line = in.readLine()) != null) {
-                    if (line.contains("//")) {
-                        String res[] = line.split("//");
-                        assignSetting(res[0].trim(), res[1].trim());
-                    }
-                }
-                in.close();
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-                return false;
-            }
-
-        }
-        return true;
-    }
-
-    public static boolean saveSettings(String path) {
-        File settingFile = new File(path);
-        try {
-            if (settingFile.exists() || settingFile.createNewFile()) {
-
-                BufferedWriter out = new BufferedWriter(
-                        new OutputStreamWriter(
-                                new FileOutputStream(settingFile)));
-                HashMap<String, String> saveBundle = new HashMap<>();
-                saveBundle.put("hidePron", Settings.hidePron ? "1" : "0");
-                saveBundle.put("hideWord", Settings.hideWord ? "1" : "0");
-                saveBundle.put("hideTrans", Settings.hideTrans ? "1" : "0");
-                saveBundle.put("autoSpeak", Settings.isAutoSpeak ? "1" : "0");
-                saveBundle.put("nightMode", Settings.isNightMode ? "1" : "0");
-                saveBundle.put("entryType", String.format(Locale.ENGLISH, "%d", Settings.entryType));
-                saveBundle.put("curLesson", String.format(Locale.ENGLISH, "%d", Settings.curLesson));
-                saveBundle.put("curInterval", String.format(Locale.ENGLISH, "%d", Settings.curInterval));
-                saveBundle.put("curEmptyRatio", String.format(Locale.ENGLISH,
-                                                "%f", Settings.curEmptyRatio));
-                saveBundle.put("curSrc1", DBHelper.source1);
-                saveBundle.put("curSrc2", DBHelper.source2);
-                saveBundle.put("curTarget", DBHelper.target);
-                saveBundle.put("curVocMode",
-                        String.format(Locale.ENGLISH, "%d", Settings.curVocChooserMode));
-                saveBundle.put("curThematic", String.format(Locale.ENGLISH,
-                        "%d", Settings.curCategory));
-
-
-                for (Map.Entry<String, String> entry : saveBundle.entrySet()) {
-                    String line = entry.getKey() + " // " + entry.getValue();
-                    out.write(line);
-                    out.newLine();
-                }
-                out.flush();
-                out.close();
-            }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-
-    private static void assignSetting(String key, String value) {
-        if (key.equals("hidePron")) {
-            if (Integer.valueOf(value) == 0) Settings.hidePron = false;
-            else Settings.hidePron = true;
-        } else if (key.equals("hideWord")) {
-            if (Integer.valueOf(value) == 0) Settings.hideWord = false;
-            else Settings.hideWord = true;
-        } else if (key.equals("hideTrans")) {
-            if (Integer.valueOf(value) == 0) Settings.hideTrans = false;
-            else Settings.hideTrans = true;
-        } else if (key.equals("autoSpeak")) {
-            if (Integer.valueOf(value) == 0) Settings.isAutoSpeak = false;
-            else Settings.isAutoSpeak = true;
-        } else if (key.equals("nightMode")) {
-            if (Integer.valueOf(value) == 0) Settings.isNightMode = false;
-            else Settings.isNightMode = true;
-        } else if (key.equals("entryType")){
-            Settings.entryType = Integer.valueOf(value);
-        }else if (key.equals("curLesson")){
-            Settings.curLesson = Integer.valueOf(value);
-        } else if (key.equals("curInterval")){
-            Settings.curInterval = Integer.valueOf(value);
-        }else if (key.equals("curEmptyRatio")){
-            Settings.curEmptyRatio = Float.valueOf(value);
-        }else if(key.equals("curThematic")){
-            Settings.curCategory = Integer.valueOf(value);
-        }else if(key.equals("curVocMode")){
-            Settings.curVocChooserMode = Integer.valueOf(value);
-        }else if(key.equals("curSrc1")){
-            DBHelper.source1 = value;
-        }else if(key.equals("curSrc2")){
-            DBHelper.source2 = value;
-        } else if(key.equals("curTarget")){
-            DBHelper.target = value;
         }
     }
 

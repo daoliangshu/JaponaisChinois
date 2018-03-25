@@ -1,5 +1,9 @@
 package com.daoliangshu.japonaischinois.core.data;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+
+import com.daoliangshu.japonaischinois.R;
 import com.daoliangshu.japonaischinois.core.EntryManager;
 
 /**
@@ -48,4 +52,13 @@ public class Settings {
     public static int[] grNumPages= { 3, 3, 0, 0, 0, 0, 0, 2, 1, 1, 2, 1, 1, 0, 0, 0};
 
     public static EntryManager dbEntryManager;
+
+    public static void loadSettings(Context c){
+        curLesson = Integer.parseInt(PreferenceManager.
+                getDefaultSharedPreferences(c).
+                getString(c.getString(R.string.pref_lesson_chooser_key),
+                        c.getString(R.string.pref_lesson_chooser_default)));
+
+        curVocChooserMode = 0;
+    }
 }
